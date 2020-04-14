@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/config/assets.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
+import 'package:serene/model/Category.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -35,12 +37,75 @@ class _HomePageState extends State<HomePage> {
   Widget contentArea() {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(Dimen.padding),
-        child: Text(
-          "Good Morning",
-          style: AppTypography.title(),
+        padding: EdgeInsets.only(
+            top: Dimen.padding, left: Dimen.padding, right: Dimen.padding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Serene",
+              style: AppTypography.title(),
+            ),
+            Spacer(),
+            bottomView()
+          ],
         ),
       ),
+    );
+  }
+
+  Widget bottomView() {
+    List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
+      const StaggeredTile.count(2, 2),
+      const StaggeredTile.count(2, 2.5),
+      const StaggeredTile.count(2, 2.5),
+      const StaggeredTile.count(2, 2),
+    ];
+
+    List<Category> _categories = <Category>[
+      Category("City", Color(0xFFF5B97E), Assets.city),
+      Category("Meditation", Color(0xFF91E7F6), Assets.meditation),
+      Category("Forest", Color(0xFFC592F3), Assets.forest),
+      Category("Rain", Color(0xFFA8E087), Assets.rain),
+    ];
+
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 4,
+      itemCount: 4,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index) =>
+          bottomElement(_categories[index]),
+      staggeredTileBuilder: (int index) => _staggeredTiles[index],
+      mainAxisSpacing: Dimen.padding,
+      crossAxisSpacing: Dimen.padding,
+    );
+  }
+
+  Widget bottomElement(Category category) {
+    return ClipRRect(
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.circular(Dimen.cornerRadius),
+      child: Container(
+          decoration: BoxDecoration(color: category.color),
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(Dimen.padding),
+                child: Text(category.title,
+                    style: AppTypography.body().copyWith(fontSize: 18)),
+              ),
+              Positioned(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Image.asset(
+                    category.iconPath,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }
