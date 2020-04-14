@@ -4,6 +4,7 @@ import 'package:serene/config/assets.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/Category.dart';
+import 'package:serene/screens/category_details.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,10 +19,11 @@ class _HomePageState extends State<HomePage> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            image: DecorationImage(
+            color: Color(0xFF2C2C2C)
+            /*image: DecorationImage(
               image: new ExactAssetImage(Assets.homeBackground),
               fit: BoxFit.cover,
-            ),
+            ),*/
             /*gradient: LinearGradient(
                 colors: [Color(0xFFB5DDD1), Color(0xFFD9EFFC)],
                 begin: Alignment.topLeft,
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Text(
               "Serene",
-              style: AppTypography.title(),
+              style: AppTypography.title().copyWith(color: Colors.white),
             ),
             Spacer(),
             bottomView()
@@ -85,27 +87,34 @@ class _HomePageState extends State<HomePage> {
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.circular(Dimen.cornerRadius),
-      child: Container(
-          decoration: BoxDecoration(color: category.color),
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(Dimen.padding),
-                child: Text(category.title,
-                    style: AppTypography.body().copyWith(fontSize: 18)),
-              ),
-              Positioned(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Image.asset(
-                    category.iconPath,
-                    width: 100,
-                    height: 100,
-                  ),
+      child: InkWell(
+        child: Container(
+            decoration: BoxDecoration(color: category.color),
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(Dimen.padding),
+                  child: Text(category.title,
+                      style: AppTypography.body().copyWith(fontSize: 18)),
                 ),
-              )
-            ],
-          )),
+                Positioned(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Image.asset(
+                      category.iconPath,
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                )
+              ],
+            )),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CategoryDetailsPage(category: category)));
+        }
+      )
     );
   }
 }
