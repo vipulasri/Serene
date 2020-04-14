@@ -28,6 +28,8 @@ class _CategoryDetailsState extends State<CategoryDetailsPage> {
                 widget.category.iconPath,
                 width: 300,
                 height: 300,
+                  color: Color.fromRGBO(255, 255, 255, 0.5),
+                  colorBlendMode: BlendMode.modulate
               ),
             ),
           )
