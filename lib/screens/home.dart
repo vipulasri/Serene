@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/config/assets.dart';
@@ -83,39 +84,38 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget bottomElement(Category category) {
-    return ClipRRect(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(Dimen.cornerRadius),
-        child: InkWell(
-            child: Container(
-                decoration: BoxDecoration(color: category.color),
-                child: Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(Dimen.padding),
-                      child: Text(category.title,
-                          style: AppTypography.body().copyWith(fontSize: 18)),
-                    ),
-                    Positioned(
-                      child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: Hero(
-                            tag: category.heroIconTag(),
-                            child: Image.asset(
-                              category.iconPath,
-                              width: 100,
-                              height: 100,
-                            ),
-                          )),
-                    )
-                  ],
-                )),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CategoryDetailsPage(category: category)));
-            }));
+    return OpenContainer(
+      transitionType: ContainerTransitionType.fade,
+      openBuilder: (BuildContext context, VoidCallback _) {
+        return CategoryDetailsPage(category: category);
+      },
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(Dimen.cornerRadius),
+        ),
+      ),
+      closedBuilder: (BuildContext context, VoidCallback callback) {
+        return Container(
+            decoration: BoxDecoration(color: category.color),
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(Dimen.padding),
+                  child: Text(category.title,
+                      style: AppTypography.body().copyWith(fontSize: 18)),
+                ),
+                Positioned(
+                  child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image.asset(
+                        category.iconPath,
+                        width: 100,
+                        height: 100,
+                      )),
+                )
+              ],
+            ));
+      },
+    );
   }
 }

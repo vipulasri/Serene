@@ -24,14 +24,11 @@ class _CategoryDetailsState extends State<CategoryDetailsPage> {
           Positioned(
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Hero(
-                tag: widget.category.heroIconTag(),
-                child: Image.asset(widget.category.iconPath,
-                    width: 200,
-                    height: 200,
-                    color: Color.fromRGBO(255, 255, 255, 0.5),
-                    colorBlendMode: BlendMode.modulate),
-              ),
+              child: Image.asset(widget.category.iconPath,
+                  width: 200,
+                  height: 200,
+                  color: Color.fromRGBO(255, 255, 255, 0.5),
+                  colorBlendMode: BlendMode.modulate),
             ),
           )
         ],
