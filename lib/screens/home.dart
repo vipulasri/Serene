@@ -18,18 +18,17 @@ class _HomePageState extends State<HomePage> {
       body: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
-            color: Color(0xFF2C2C2C)
-            /*image: DecorationImage(
+          decoration: BoxDecoration(color: Color(0xFF2C2C2C)
+              /*image: DecorationImage(
               image: new ExactAssetImage(Assets.homeBackground),
               fit: BoxFit.cover,
             ),*/
-            /*gradient: LinearGradient(
+              /*gradient: LinearGradient(
                 colors: [Color(0xFFB5DDD1), Color(0xFFD9EFFC)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )*/
-          ),
+              ),
           child: Stack(
             children: <Widget>[contentArea()],
           )),
@@ -65,10 +64,10 @@ class _HomePageState extends State<HomePage> {
     ];
 
     List<Category> _categories = <Category>[
-      Category("City", Color(0xFFF5B97E), Assets.city),
-      Category("Meditation", Color(0xFF91E7F6), Assets.meditation),
-      Category("Forest", Color(0xFFC592F3), Assets.forest),
-      Category("Rain", Color(0xFFA8E087), Assets.rain),
+      Category(1, "City", Color(0xFFF5B97E), Assets.city),
+      Category(2, "Meditation", Color(0xFF91E7F6), Assets.meditation),
+      Category(3, "Forest", Color(0xFFC592F3), Assets.forest),
+      Category(4, "Rain", Color(0xFFA8E087), Assets.rain),
     ];
 
     return StaggeredGridView.countBuilder(
@@ -85,36 +84,38 @@ class _HomePageState extends State<HomePage> {
 
   Widget bottomElement(Category category) {
     return ClipRRect(
-      clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.circular(Dimen.cornerRadius),
-      child: InkWell(
-        child: Container(
-            decoration: BoxDecoration(color: category.color),
-            child: Stack(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(Dimen.padding),
-                  child: Text(category.title,
-                      style: AppTypography.body().copyWith(fontSize: 18)),
-                ),
-                Positioned(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Image.asset(
-                      category.iconPath,
-                      width: 100,
-                      height: 100,
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.circular(Dimen.cornerRadius),
+        child: InkWell(
+            child: Container(
+                decoration: BoxDecoration(color: category.color),
+                child: Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(Dimen.padding),
+                      child: Text(category.title,
+                          style: AppTypography.body().copyWith(fontSize: 18)),
                     ),
-                  ),
-                )
-              ],
-            )),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CategoryDetailsPage(category: category)));
-        }
-      )
-    );
+                    Positioned(
+                      child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: Hero(
+                            tag: category.heroIconTag(),
+                            child: Image.asset(
+                              category.iconPath,
+                              width: 100,
+                              height: 100,
+                            ),
+                          )),
+                    )
+                  ],
+                )),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CategoryDetailsPage(category: category)));
+            }));
   }
 }
