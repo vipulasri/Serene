@@ -3,11 +3,19 @@ import 'package:flutter/material.dart';
 class AppTypography {
   static String fontFamily = "HaasGrotesk";
 
-  static TextStyle title() {
+  static TextStyle appTitle() {
     return TextStyle(
         fontFamily: fontFamily,
         fontSize: 22,
         fontWeight: FontWeight.w700,
+        color: Colors.black);
+  }
+
+  static TextStyle title() {
+    return TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
         color: Colors.black);
   }
 

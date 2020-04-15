@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Text(
               "Serene",
-              style: AppTypography.title().copyWith(color: Colors.white),
+              style: AppTypography.appTitle().copyWith(color: Colors.white),
             ),
             Spacer(),
             bottomView()
