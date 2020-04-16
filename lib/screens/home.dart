@@ -14,12 +14,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CategoryBloc>(context)
-        .add(FetchCategories());
+    BlocProvider.of<CategoryBloc>(context).add(FetchCategories());
   }
 
   @override
@@ -56,23 +54,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showCategories() {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          if (state is CategoryEmpty) {
-            return Center(child: Text('No Categories Found'));
-          }
-          if (state is CategoryLoading) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (state is CategoryLoaded) {
-            return categoriesView(state.categories);
-          }
-          if (state is CategoryError) {
-            return Center(child: Text('Error fetching categories'));
-          }
-          return Center(child: Text('No Categories Found'));
-        }
-    );
+    return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
+      if (state is CategoryEmpty) {
+        return Center(child: Text('No Categories Found'));
+      }
+      if (state is CategoryLoading) {
+        return Center(child: CircularProgressIndicator());
+      }
+      if (state is CategoryLoaded) {
+        return categoriesView(state.categories);
+      }
+      if (state is CategoryError) {
+        return Center(child: Text('Error fetching categories'));
+      }
+      return Center(child: Text('No Categories Found'));
+    });
   }
 
   Widget categoriesView(List<Category> categories) {
@@ -120,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                       alignment: Alignment.bottomRight,
                       child: Image.asset(
-                        category.getIconPath(),
+                        category.icon,
                         width: 100,
                         height: 100,
                       )),

@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:serene/config/assets.dart';
 import 'package:serene/model/sound.dart';
 
-List<Category> categoryFromJson(String str) => List<Category>.from(json.decode(str).map((x) => Category.fromJson(x).copyWith(
-  color: getCategoryColor(x["id"])
+List<Category> categoryFromJson(String str) => List<Category>.from(json.decode(str).map((category) => Category.fromJson(category).copyWith(
+  color: getCategoryColor(category["id"]),
+  icon: Assets.basePath + category["icon"]
 )));
 
-String categoryToJson(List<Category> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String categoryToJson(List<Category> data) => json.encode(List<dynamic>.from(data.map((category) => category.toJson())));
 
 class Category {
   String id;
@@ -41,22 +43,21 @@ class Category {
         sounds: sounds ?? this.sounds,
       );
 
-  String getIconPath() {
-    return Assets.basePath + icon;
-  }
-
   factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     title: json["title"],
     icon: json["icon"],
-    sounds: List<Sound>.from(json["sounds"].map((x) => Sound.fromJson(x))),
+    sounds: List<Sound>.from(json["sounds"].map((sound) => Sound.fromJson(sound).copyWith(
+      icon: Assets.basePath + json["title"].toLowerCase() + "/" + sound["icon"], // ex: assets/images/city/ic_airplane.png
+      iconActive: Assets.basePath + json["title"].toLowerCase() + "/" + sound["iconActive"],
+    ))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
     "icon": icon,
-    "sounds": List<dynamic>.from(sounds.map((x) => x.toJson())),
+    "sounds": List<dynamic>.from(sounds.map((sound) => sound.toJson())),
   };
 }
 

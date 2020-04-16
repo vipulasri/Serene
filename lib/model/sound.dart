@@ -14,13 +14,18 @@ class Sound {
     @required this.iconActive,
   });
 
-  String getIconPath() {
-    return Assets.basePath + title.toLowerCase() + "/" + icon;
-  }
-
-  String getActiveIconPath(String name) {
-    return Assets.basePath + title.toLowerCase() + "/" + iconActive;
-  }
+  Sound copyWith({
+    String id,
+    String title,
+    String icon,
+    String iconActive,
+  }) =>
+      Sound(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        icon: icon ?? this.icon,
+        iconActive: iconActive ?? this.iconActive,
+      );
 
   factory Sound.fromJson(Map<String, dynamic> json) => Sound(
     id: json["id"],
