@@ -1,10 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:serene/config/assets.dart';
+import 'package:serene/blocs/blocs.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
-import 'package:serene/model/Category.dart';
+import 'package:serene/model/category.dart';
 import 'package:serene/screens/category_details.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,23 +14,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<CategoryBloc>(context)
+        .add(FetchCategories());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(color: Color(0xFF2C2C2C)
-              /*image: DecorationImage(
-              image: new ExactAssetImage(Assets.homeBackground),
-              fit: BoxFit.cover,
-            ),*/
-              /*gradient: LinearGradient(
-                colors: [Color(0xFFB5DDD1), Color(0xFFD9EFFC)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )*/
-              ),
+          decoration: BoxDecoration(color: Color(0xFF2C2C2C)),
           child: Stack(
             children: <Widget>[contentArea()],
           )),
@@ -49,14 +48,34 @@ class _HomePageState extends State<HomePage> {
               style: AppTypography.appTitle().copyWith(color: Colors.white),
             ),
             Spacer(),
-            bottomView()
+            showCategories()
           ],
         ),
       ),
     );
   }
 
-  Widget bottomView() {
+  Widget showCategories() {
+    return BlocBuilder<CategoryBloc, CategoryState>(
+        builder: (context, state) {
+          if (state is CategoryEmpty) {
+            return Center(child: Text('No Categories Found'));
+          }
+          if (state is CategoryLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is CategoryLoaded) {
+            return categoriesView(state.categories);
+          }
+          if (state is CategoryError) {
+            return Center(child: Text('Error fetching categories'));
+          }
+          return Center(child: Text('No Categories Found'));
+        }
+    );
+  }
+
+  Widget categoriesView(List<Category> categories) {
     List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
       const StaggeredTile.count(2, 2),
       const StaggeredTile.count(2, 2.5),
@@ -64,19 +83,12 @@ class _HomePageState extends State<HomePage> {
       const StaggeredTile.count(2, 2),
     ];
 
-    List<Category> _categories = <Category>[
-      Category(1, "City", Color(0xFFF5B97E), Assets.city),
-      Category(2, "Meditation", Color(0xFF91E7F6), Assets.meditation),
-      Category(3, "Forest", Color(0xFFC592F3), Assets.forest),
-      Category(4, "Rain", Color(0xFFA8E087), Assets.rain),
-    ];
-
     return StaggeredGridView.countBuilder(
       crossAxisCount: 4,
       itemCount: 4,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) =>
-          bottomElement(_categories[index]),
+          bottomElement(categories[index]),
       staggeredTileBuilder: (int index) => _staggeredTiles[index],
       mainAxisSpacing: Dimen.padding,
       crossAxisSpacing: Dimen.padding,
@@ -108,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                       alignment: Alignment.bottomRight,
                       child: Image.asset(
-                        category.iconPath,
+                        category.getIconPath(),
                         width: 100,
                         height: 100,
                       )),

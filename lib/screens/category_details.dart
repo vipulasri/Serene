@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
-import 'package:serene/model/Category.dart';
+import 'package:serene/model/category.dart';
 
 class CategoryDetailsPage extends StatefulWidget {
   final Category category;
@@ -24,7 +24,7 @@ class _CategoryDetailsState extends State<CategoryDetailsPage> {
           Positioned(
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Image.asset(widget.category.iconPath,
+              child: Image.asset(widget.category.getIconPath(),
                   width: 200,
                   height: 200,
                   color: Color.fromRGBO(255, 255, 255, 0.5),

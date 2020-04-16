@@ -3,8 +3,13 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serene/blocs/blocs.dart';
 import 'package:serene/config/assets.dart';
+import 'package:serene/data/categories_repository.dart';
 import 'package:serene/screens/home.dart';
+
+import 'blocs/simple_bloc_delegate.dart';
 
 Image backgroundImage;
 
@@ -38,6 +43,7 @@ Future<Uint8List> loadImage(String url) {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadImage(Assets.homeBackground);
+  BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(MyApp());
 }
 
@@ -56,7 +62,12 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      home: HomePage(),
+      home: BlocProvider(
+        create: (context) => CategoryBloc(
+          repository: CategoriesRepository()
+        ),
+        child: HomePage(),
+      ),
     );
   }
 }
