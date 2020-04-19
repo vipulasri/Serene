@@ -69,7 +69,7 @@ class SoundButtonState extends State<SoundButton> {
         disabledThumbColor: inactiveColor,
         trackShape: RectangularSliderTrackShape(),
         thumbColor: activeColor,
-        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
+        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
       ),
       child: Slider(
         value: volume,
