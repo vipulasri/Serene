@@ -8,56 +8,47 @@
       {
         "id": "101",
         "title": "Airplane",
-        "icon": "ic_airplane_normal.png",
-        "iconActive": "ic_airplane_active.png"
+        "icon": "ic_airplane_normal.png"
       },
       {
         "id": "102",
         "title": "Car",
-        "icon": "ic_car_normal.png",
-        "iconActive": "ic_car_active.png"
+        "icon": "ic_car_normal.png"
       },
       {
         "id": "103",
         "title": "Fan",
-        "icon": "ic_fan_normal.png",
-        "iconActive": "ic_fan_active.png"
+        "icon": "ic_fan_normal.png"
       },
       {
         "id": "104",
         "title": "Keyboard",
-        "icon": "ic_keyboard_normal.png",
-        "iconActive": "ic_keyboard_active.png"
+        "icon": "ic_keyboard_normal.png"
       },
       {
         "id": "105",
         "title": "Rails",
-        "icon": "ic_rails_normal.png",
-        "iconActive": "ic_rails_active.png"
+        "icon": "ic_rails_normal.png"
       },
       {
         "id": "106",
         "title": "Restaurant",
-        "icon": "ic_restaurant_normal.png",
-        "iconActive": "ic_restaurant_active.png"
+        "icon": "ic_restaurant_normal.png"
       },
       {
         "id": "107",
         "title": "Subway",
-        "icon": "ic_subway_normal.png",
-        "iconActive": "ic_subway_active.png"
+        "icon": "ic_subway_normal.png"
       },
       {
         "id": "108",
         "title": "Traffic",
-        "icon": "ic_traffic_normal.png",
-        "iconActive": "ic_traffic_active.png"
+        "icon": "ic_traffic_normal.png"
       },
       {
         "id": "109",
         "title": "Washing Machine",
-        "icon": "ic_washing_machine_normal.png",
-        "iconActive": "ic_washing_machine_active.png"
+        "icon": "ic_washing_machine_normal.png"
       }
     ]
   },
@@ -70,56 +61,47 @@
       {
         "id": "101",
         "title": "Airplane",
-        "icon": "ic_airplane_normal.png",
-        "iconActive": "ic_airplane_active.png"
+        "icon": "ic_airplane_normal.png"
       },
       {
         "id": "102",
         "title": "Car",
-        "icon": "ic_car_normal.png",
-        "iconActive": "ic_car_active.png"
+        "icon": "ic_car_normal.png"
       },
       {
         "id": "103",
         "title": "Fan",
-        "icon": "ic_fan_normal.png",
-        "iconActive": "ic_fan_active.png"
+        "icon": "ic_fan_normal.png"
       },
       {
         "id": "104",
         "title": "Keyboard",
-        "icon": "ic_keyboard_normal.png",
-        "iconActive": "ic_keyboard_active.png"
+        "icon": "ic_keyboard_normal.png"
       },
       {
         "id": "105",
         "title": "Rails",
-        "icon": "ic_rails_normal.png",
-        "iconActive": "ic_rails_active.png"
+        "icon": "ic_rails_normal.png"
       },
       {
         "id": "106",
         "title": "Restaurant",
-        "icon": "ic_restaurant_normal.png",
-        "iconActive": "ic_restaurant_active.png"
+        "icon": "ic_restaurant_normal.png"
       },
       {
         "id": "107",
         "title": "Subway",
-        "icon": "ic_subway_normal.png",
-        "iconActive": "ic_subway_active.png"
+        "icon": "ic_subway_normal.png"
       },
       {
         "id": "108",
         "title": "Traffic",
-        "icon": "ic_traffic_normal.png",
-        "iconActive": "ic_car_active.png"
+        "icon": "ic_traffic_normal.png"
       },
       {
         "id": "109",
         "title": "Washing Machine",
-        "icon": "ic_washing_machine_normal.png",
-        "iconActive": "ic_washing_machine_active.png"
+        "icon": "ic_washing_machine_normal.png"
       }
     ]
   },
@@ -132,8 +114,7 @@
       {
         "id": "101",
         "title": "Airplane",
-        "icon": "ic_airplane_normal.png",
-        "iconActive": "ic_airplane_active.png"
+        "icon": "ic_airplane_normal.png"
       },
       {
         "id": "102",
@@ -144,44 +125,37 @@
       {
         "id": "103",
         "title": "Fan",
-        "icon": "ic_fan_normal.png",
-        "iconActive": "ic_fan_active.png"
+        "icon": "ic_fan_normal.png"
       },
       {
         "id": "104",
         "title": "Keyboard",
-        "icon": "ic_keyboard_normal.png",
-        "iconActive": "ic_keyboard_active.png"
+        "icon": "ic_keyboard_normal.png"
       },
       {
         "id": "105",
         "title": "Rails",
-        "icon": "ic_rails_normal.png",
-        "iconActive": "ic_rails_active.png"
+        "icon": "ic_rails_normal.png"
       },
       {
         "id": "106",
         "title": "Restaurant",
-        "icon": "ic_restaurant_normal.png",
-        "iconActive": "ic_restaurant_active.png"
+        "icon": "ic_restaurant_normal.png"
       },
       {
         "id": "107",
         "title": "Subway",
-        "icon": "ic_subway_normal.png",
-        "iconActive": "ic_subway_active.png"
+        "icon": "ic_subway_normal.png"
       },
       {
         "id": "108",
         "title": "Traffic",
-        "icon": "ic_traffic_normal.png",
-        "iconActive": "ic_car_active.png"
+        "icon": "ic_traffic_normal.png"
       },
       {
         "id": "109",
         "title": "Washing Machine",
-        "icon": "ic_washing_machine_normal.png",
-        "iconActive": "ic_washing_machine_active.png"
+        "icon": "ic_washing_machine_normal.png"
       }
     ]
   },
@@ -194,56 +168,47 @@
       {
         "id": "101",
         "title": "Airplane",
-        "icon": "ic_airplane_normal.png",
-        "iconActive": "ic_airplane_active.png"
+        "icon": "ic_airplane_normal.png"
       },
       {
         "id": "102",
         "title": "Car",
-        "icon": "ic_car_normal.png",
-        "iconActive": "ic_car_active.png"
+        "icon": "ic_car_normal.png"
       },
       {
         "id": "103",
         "title": "Fan",
-        "icon": "ic_fan_normal.png",
-        "iconActive": "ic_fan_active.png"
+        "icon": "ic_fan_normal.png"
       },
       {
         "id": "104",
         "title": "Keyboard",
-        "icon": "ic_keyboard_normal.png",
-        "iconActive": "ic_keyboard_active.png"
+        "icon": "ic_keyboard_normal.png"
       },
       {
         "id": "105",
         "title": "Rails",
-        "icon": "ic_rails_normal.png",
-        "iconActive": "ic_rails_active.png"
+        "icon": "ic_rails_normal.png"
       },
       {
         "id": "106",
         "title": "Restaurant",
-        "icon": "ic_restaurant_normal.png",
-        "iconActive": "ic_restaurant_active.png"
+        "icon": "ic_restaurant_normal.png"
       },
       {
         "id": "107",
         "title": "Subway",
-        "icon": "ic_subway_normal.png",
-        "iconActive": "ic_subway_active.png"
+        "icon": "ic_subway_normal.png"
       },
       {
         "id": "108",
         "title": "Traffic",
-        "icon": "ic_traffic_normal.png",
-        "iconActive": "ic_car_active.png"
+        "icon": "ic_traffic_normal.png"
       },
       {
         "id": "109",
         "title": "Washing Machine",
-        "icon": "ic_washing_machine_normal.png",
-        "iconActive": "ic_washing_machine_active.png"
+        "icon": "ic_washing_machine_normal.png"
       }
     ]
   }

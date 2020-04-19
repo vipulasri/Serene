@@ -18,17 +18,8 @@ class SoundButtonState extends State<SoundButton> {
   final Color activeColor = Color(0xFF1D2632).withOpacity(0.8);
   final Color inactiveColor = Color(0xFF1D2632).withOpacity(0.2);
 
-  String icon = '';
   bool active = false;
   double volume = 5;
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      icon = widget.sound.icon;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +30,10 @@ class SoundButtonState extends State<SoundButton> {
               children: [
                 MaterialButton(
                   onPressed: null,
-                  child: icon != ''
-                      ? Image.asset(
-                    icon,
+                  child: Image.asset(
+                    widget.sound.icon,
                     color: active ? activeColor : inactiveColor,
-                  )
-                      : Container(),
+                  ),
                 ),
                 volumeSlider()
               ],
@@ -52,8 +41,6 @@ class SoundButtonState extends State<SoundButton> {
           onTap: () {
             setState(() {
               active = !active;
-              /*icon =
-              active ? widget.sound.iconActive : widget.sound.icon;*/
             });
           },
         )

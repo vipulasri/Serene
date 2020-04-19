@@ -49,7 +49,6 @@ class Category {
     icon: json["icon"],
     sounds: List<Sound>.from(json["sounds"].map((sound) => Sound.fromJson(sound).copyWith(
       icon: Assets.basePath + json["title"].toLowerCase() + "/" + sound["icon"], // ex: assets/images/city/ic_airplane.png
-      iconActive: Assets.basePath + json["title"].toLowerCase() + "/" + sound["iconActive"],
     ))),
   );
 
