@@ -52,8 +52,8 @@ class SoundButtonState extends State<SoundButton> {
           onTap: () {
             setState(() {
               active = !active;
-              icon =
-              active ? widget.sound.iconActive : widget.sound.icon;
+              /*icon =
+              active ? widget.sound.iconActive : widget.sound.icon;*/
             });
           },
         )
