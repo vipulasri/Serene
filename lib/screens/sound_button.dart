@@ -15,8 +15,8 @@ class SoundButton extends StatefulWidget {
 }
 
 class SoundButtonState extends State<SoundButton> {
-  final Color activeColor = Colors.white;
-  final Color inactiveColor = Colors.white.withOpacity(0.5);
+  final Color activeColor = Color(0xFF1D2632).withOpacity(0.8);
+  final Color inactiveColor = Color(0xFF1D2632).withOpacity(0.2);
 
   String icon = '';
   bool active = false;
@@ -33,25 +33,31 @@ class SoundButtonState extends State<SoundButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-      children: [
-        MaterialButton(
-          onPressed: () {
+        child: InkWell(
+            splashColor: Colors.black,
+            child: Column(
+              children: [
+                MaterialButton(
+                  onPressed: null,
+                  child: icon != ''
+                      ? Image.asset(
+                    icon,
+                    color: active ? activeColor : inactiveColor,
+                  )
+                      : Container(),
+                ),
+                volumeSlider()
+              ],
+            ),
+          onTap: () {
             setState(() {
               active = !active;
-              icon = active ? widget.sound.iconActive : widget.sound.icon;
+              icon =
+              active ? widget.sound.iconActive : widget.sound.icon;
             });
           },
-          child: icon != ''
-              ? Image.asset(
-                  icon,
-                  color: active ? activeColor : inactiveColor,
-                )
-              : Container(),
-        ),
-        volumeSlider()
-      ],
-    ));
+        )
+    );
   }
 
   Widget volumeSlider() {

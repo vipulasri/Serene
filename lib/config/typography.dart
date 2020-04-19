@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class AppTypography {
   static String fontFamily = "HaasGrotesk";
+  static Color textColor = Color(0xFF1D2632);
 
   static TextStyle appTitle() {
     return TextStyle(
         fontFamily: fontFamily,
         fontSize: 22,
         fontWeight: FontWeight.w700,
-        color: Colors.black);
+        color: textColor);
   }
 
   static TextStyle title() {
@@ -16,7 +17,7 @@ class AppTypography {
         fontFamily: fontFamily,
         fontSize: 20,
         fontWeight: FontWeight.w500,
-        color: Colors.black);
+        color: textColor);
   }
 
   static TextStyle body() {
@@ -24,7 +25,7 @@ class AppTypography {
         fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        color: Colors.black);
+        color: textColor);
   }
 
   static TextStyle body2() {
@@ -32,6 +33,6 @@ class AppTypography {
         fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: FontWeight.w500,
-        color: Colors.black);
+        color: textColor);
   }
 }

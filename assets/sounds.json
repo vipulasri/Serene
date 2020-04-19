@@ -51,7 +51,7 @@
         "id": "108",
         "title": "Traffic",
         "icon": "ic_traffic_normal.png",
-        "iconActive": "ic_car_active.png"
+        "iconActive": "ic_traffic_active.png"
       },
       {
         "id": "109",
