@@ -64,19 +64,19 @@ Color getCategoryColor(String categoryId) {
   Color color = null;
   switch(categoryId) {
     case "1": {
-      color = Color(0xFFF5B97E);
-    }
-    break;
-    case "2": {
-      color = Color(0xFF91E7F6);
-    }
-    break;
-    case "3": {
       color = Color(0xFFC592F3);
     }
     break;
-    case "4": {
+    case "2": {
+      color = Color(0xFFF5B97E);
+    }
+    break;
+    case "3": {
       color = Color(0xFFA8E087);
+    }
+    break;
+    case "4": {
+      color = Color(0xFF91E7F6);
     }
     break;
     default: Color(0xFFF5B97E);

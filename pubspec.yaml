@@ -25,6 +25,9 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/city/
+    - assets/images/meditation/
+    - assets/images/forest/
+    - assets/images/rain/
   fonts:
     - family: HaasGrotesk
       fonts:
