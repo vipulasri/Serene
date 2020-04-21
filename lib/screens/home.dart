@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/blocs/blocs.dart';
+import 'package:serene/blocs/result_state.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
-import 'package:serene/screens/category_details.dart';
+import 'package:serene/screens/category_details_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -54,17 +55,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showCategories() {
-    return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
-      if (state is CategoryEmpty) {
+    return BlocBuilder<CategoryBloc, Result>(builder: (context, state) {
+      if (state is Empty) {
         return Center(child: Text('No Categories Found'));
       }
-      if (state is CategoryLoading) {
+      if (state is Loading) {
         return Center(child: CircularProgressIndicator());
       }
-      if (state is CategoryLoaded) {
-        return categoriesView(state.categories);
+      if (state is Success) {
+        return categoriesView(state.value);
       }
-      if (state is CategoryError) {
+      if (state is Error) {
         return Center(child: Text('Error fetching categories'));
       }
       return Center(child: Text('No Categories Found'));

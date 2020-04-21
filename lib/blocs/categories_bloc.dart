@@ -1,31 +1,32 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:serene/blocs/result_state.dart';
 import 'package:serene/data/categories_repository.dart';
 import 'package:serene/model/category.dart';
 
-class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+class CategoryBloc extends Bloc<CategoryEvent, Result> {
   final CategoriesRepository repository;
 
   CategoryBloc({@required this.repository}) : assert(repository != null);
 
   @override
-  CategoryState get initialState => CategoryEmpty();
+  Result get initialState => Empty();
 
   @override
-  Stream<CategoryState> mapEventToState(CategoryEvent event) async* {
+  Stream<Result<List<Category>>> mapEventToState(CategoryEvent event) async* {
     if (event is FetchCategories) {
       yield* _mapFetchCategoriesToState(event);
     }
   }
 
-  Stream<CategoryState> _mapFetchCategoriesToState(
+  Stream<Result<List<Category>>> _mapFetchCategoriesToState(
       FetchCategories event) async* {
-    yield CategoryLoading();
+    yield Loading();
     try {
-      yield CategoryLoaded(categories: await repository.loadCategories());
-    } catch (_) {
-      yield CategoryError();
+      yield Success(await repository.loadCategories());
+    } catch (error) {
+      yield Error(error);
     }
   }
 }
@@ -41,27 +42,3 @@ class FetchCategories extends CategoryEvent {
   @override
   List<Object> get props => [];
 }
-
-// States
-abstract class CategoryState extends Equatable {
-  const CategoryState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CategoryEmpty extends CategoryState {}
-
-class CategoryLoading extends CategoryState {}
-
-class CategoryLoaded extends CategoryState {
-  final List<Category> categories;
-
-  const CategoryLoaded({@required this.categories})
-      : assert(categories != null);
-
-  @override
-  List<Object> get props => [categories];
-}
-
-class CategoryError extends CategoryState {}

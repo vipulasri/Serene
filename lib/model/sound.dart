@@ -5,23 +5,26 @@ class Sound {
   String id;
   String title;
   String icon;
+  bool isActive;
 
   Sound({
     @required this.id,
     @required this.title,
-    @required this.icon
+    @required this.icon,
+    bool isActive
   });
 
   Sound copyWith({
     String id,
     String title,
     String icon,
-    String iconActive,
+    bool isActive
   }) =>
       Sound(
         id: id ?? this.id,
         title: title ?? this.title,
         icon: icon ?? this.icon,
+        isActive: isActive?? this.isActive
       );
 
   factory Sound.fromJson(Map<String, dynamic> json) => Sound(

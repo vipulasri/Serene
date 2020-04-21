@@ -50,6 +50,17 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return RepositoryProvider<CategoriesRepository>(
+      create: (_) => CategoriesRepository(),
+      child: BlocProvider(
+        create: (context) => CategoryBloc(
+            repository: RepositoryProvider.of<CategoriesRepository>(context)),
+        child: app(),
+      ),
+    );
+  }
+
+  Widget app() {
     return MaterialApp(
       title: 'Serene',
       debugShowCheckedModeBanner: false,
@@ -64,8 +75,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (context) => CategoryBloc(
-          repository: CategoriesRepository()
-        ),
+            repository: RepositoryProvider.of<CategoriesRepository>(context)),
         child: HomePage(),
       ),
     );
