@@ -20,7 +20,7 @@ class _CategoryDetailsState extends State<CategoryDetailsPage> {
     return BlocProvider(
       create: (context) => SoundBloc(
           repository: RepositoryProvider.of<CategoriesRepository>(context)),
-      child: DetailssView(category: widget.category),
+      child: DetailsView(category: widget.category),
     );
   }
 }

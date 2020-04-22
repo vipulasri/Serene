@@ -10,16 +10,17 @@ import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
 import 'package:serene/screens/sound_button.dart';
 
-class DetailssView extends StatefulWidget {
+class DetailsView extends StatefulWidget {
   final Category category;
 
-  DetailssView({Key key, @required this.category}) : super(key: key);
+  DetailsView({Key key, @required this.category}) : super(key: key);
 
   @override
-  _DetailssViewState createState() => _DetailssViewState();
+  _DetailsViewState createState() => _DetailsViewState();
 }
 
-class _DetailssViewState extends State<DetailssView> {
+class _DetailsViewState extends State<DetailsView> {
+
   @override
   void initState() {
     super.initState();
@@ -31,26 +32,27 @@ class _DetailssViewState extends State<DetailssView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(color: widget.category.color),
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: EdgeInsets.only(top: Dimen.padding * 3),
-                child: Image.asset(widget.category.icon,
-                    width: 200,
-                    height: 200,
-                    color: Color.fromRGBO(255, 255, 255, 0.5),
-                    colorBlendMode: BlendMode.modulate),
+          decoration: BoxDecoration(color: widget.category.color),
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: Dimen.padding * 3),
+                    child: Image.asset(widget.category.icon,
+                        width: 200,
+                        height: 200,
+                        color: Color.fromRGBO(255, 255, 255, 0.5),
+                        colorBlendMode: BlendMode.modulate),
+                  ),
+                ),
               ),
-            ),
+              contentArea()
+            ],
           ),
-          contentArea()
-        ],
-      ),
-    ));
+        )
+    );
   }
 
   Widget contentArea() {
@@ -104,30 +106,31 @@ class _DetailssViewState extends State<DetailssView> {
   Widget appBar() {
     return Container(
         child: Padding(
-      padding: EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
           vertical: Dimen.padding, horizontal: Dimen.padding),
-      child: Row(
-        children: [
-          Text(
-            widget.category.title,
-            style: AppTypography.title(),
-          ),
-          Spacer(),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              customBorder: CircleBorder(),
-              child: Icon(
-                Icons.close,
-                color: Colors.black,
-                size: 20,
+          child: Row(
+            children: [
+              Text(
+                widget.category.title,
+                style: AppTypography.title(),
               ),
-              onTap: () => Navigator.of(context).pop(),
-            ),
+              Spacer(),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  customBorder: CircleBorder(),
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                  onTap: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        )
+    );
   }
 
   Widget showSounds() {
