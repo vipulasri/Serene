@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class Assets {
-  static const basePath = 'assets/images/';
-  static const homeBackground = basePath + 'bg_home.jpg';
+  static const baseImagesPath = 'assets/images/';
+  static const homeBackground = baseImagesPath + 'bg_home.jpg';
   static const soundsJson = 'assets/sounds.json';
+  static const baseSoundsPath = 'assets/audios/';
 
   void preCacheAssets(BuildContext context) {
     precacheImage(AssetImage(homeBackground), context);

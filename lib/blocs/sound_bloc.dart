@@ -33,7 +33,7 @@ class SoundBloc extends Bloc<SoundEvent, Result> {
 
   Stream<Result<List<Sound>>> _mapUpdateSoundToState(UpdateSound event) async* {
     try {
-      await repository.updateSound(event.soundId, event.isActive); //update
+      await repository.updateSound(event.soundId, event.active, event.volume); //update
       _mapFetchSoundsToState(FetchSounds(categoryId: event.soundId.substring(0, 1))); // return the updated sounds
     } catch (error) {
       yield Error(error);
@@ -57,11 +57,12 @@ class FetchSounds extends SoundEvent {
 
 class UpdateSound extends SoundEvent {
   final String soundId;
-  final bool isActive;
+  final bool active;
+  final double volume;
 
-  const UpdateSound({@required this.soundId, @required this.isActive})
+  const UpdateSound({@required this.soundId, @required this.active,  @required this.volume})
       : assert(soundId != null);
 
   @override
-  List<Object> get props => [soundId, isActive];
+  List<Object> get props => [soundId, active];
 }

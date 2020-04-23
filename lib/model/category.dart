@@ -8,7 +8,7 @@ import 'package:serene/model/sound.dart';
 
 List<Category> categoryFromJson(String str) => List<Category>.from(json.decode(str).map((category) => Category.fromJson(category).copyWith(
   color: getCategoryColor(category["id"]),
-  icon: Assets.basePath + category["icon"]
+  icon: Assets.baseImagesPath + category["icon"]
 )));
 
 String categoryToJson(List<Category> data) => json.encode(List<dynamic>.from(data.map((category) => category.toJson())));
@@ -48,7 +48,8 @@ class Category {
     title: json["title"],
     icon: json["icon"],
     sounds: List<Sound>.from(json["sounds"].map((sound) => Sound.fromJson(sound).copyWith(
-      icon: Assets.basePath + json["title"].toLowerCase() + "/" + sound["icon"], // ex: assets/images/city/ic_airplane.png
+      icon: Assets.baseImagesPath + json["title"].toLowerCase() + "/" + sound["icon"], // ex: assets/images/city/ic_airplane.png
+      audio: Assets.baseSoundsPath + sound["audio"]
     ))),
   );
 

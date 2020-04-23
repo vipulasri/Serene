@@ -1,41 +1,50 @@
 import 'package:meta/meta.dart';
-import 'package:serene/config/assets.dart';
 
 class Sound {
   String id;
   String title;
   String icon;
-  bool isActive = false;
+  String audio;
+  bool active;
+  double volume;
 
   Sound({
     @required this.id,
     @required this.title,
     @required this.icon,
-    this.isActive = false,
+    @required this.audio,
+    this.active = false,
+    this.volume = 5
   });
 
   Sound copyWith({
     String id,
     String title,
     String icon,
-    bool isActive
+    String audio,
+    bool active,
+    double volume
   }) =>
       Sound(
         id: id ?? this.id,
         title: title ?? this.title,
         icon: icon ?? this.icon,
-        isActive: isActive?? this.isActive
+        audio: audio?? this.audio,
+        active: active?? this.active,
+        volume: volume?? this.volume
       );
 
   factory Sound.fromJson(Map<String, dynamic> json) => Sound(
     id: json["id"],
     title: json["title"],
     icon: json["icon"],
+    audio: json["audio"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
     "icon": icon,
+    "audio": audio
   };
 }

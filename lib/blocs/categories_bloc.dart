@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -26,6 +28,7 @@ class CategoryBloc extends Bloc<CategoryEvent, Result> {
     try {
       yield Success(await repository.loadCategories());
     } catch (error) {
+      log(error);
       yield Error(error);
     }
   }

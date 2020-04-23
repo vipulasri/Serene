@@ -39,12 +39,12 @@ class CategoriesRepository {
         .toList(); //sound id = 201, 2 is category id
   }
 
-  Future<bool> updateSound(String soundId, bool isActive) async {
+  Future<bool> updateSound(String soundId, bool active, double volume) async {
     if(sounds.isEmpty) return false;
 
     int soundIndex = sounds.indexWhere((sound) => sound.id == soundId);
     if (soundIndex > 0) {
-      Sound sound = sounds[soundIndex].copyWith(isActive: isActive);
+      Sound sound = sounds[soundIndex].copyWith(active: active, volume: volume);
       sounds[soundIndex] = sound;
       return true;
     }

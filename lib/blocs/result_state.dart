@@ -33,7 +33,7 @@ class Success<T> extends Result<T> {
 }
 
 class Error<T> extends Result<T> {
-  final Exception exception;
+  final Error exception;
 
   Error(this.exception);
 }

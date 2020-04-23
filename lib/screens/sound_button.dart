@@ -21,22 +21,23 @@ class SoundButtonState extends State<SoundButton> {
   final Color inactiveColor = Color(0xFF1D2632).withOpacity(0.2);
 
   bool active = false;
-  double volume = 5;
+  double volume = 1;
 
   @override
   void initState() {
     super.initState();
-    active = widget.sound.isActive;
+    active = widget.sound.active;
+    volume = widget.sound.volume.toDouble();
   }
 
   @override
   Widget build(BuildContext context) {
     _onButtonClick() {
       setState(() {
-        active = !active;
+        this.active = !active;
       });
       BlocProvider.of<SoundBloc>(context)
-          .add(UpdateSound(soundId: widget.sound.id, isActive: active));
+          .add(UpdateSound(soundId: widget.sound.id, active: active, volume: volume));
     }
     return Container(
         child: InkWell(
@@ -59,6 +60,13 @@ class SoundButtonState extends State<SoundButton> {
   }
 
   Widget volumeSlider() {
+    _onVolumeChanged(double volume) {
+      setState(() {
+        this.volume = volume;
+      });
+      BlocProvider.of<SoundBloc>(context)
+          .add(UpdateSound(soundId: widget.sound.id, active: active, volume: volume));
+    }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         activeTrackColor: activeColor,
@@ -75,9 +83,7 @@ class SoundButtonState extends State<SoundButton> {
         max: 10,
         onChanged: active
             ? (double newValue) {
-                setState(() {
-                  volume = newValue.round().toDouble();
-                });
+                _onVolumeChanged(newValue.round().toDouble());
               }
             : null,
       ),
