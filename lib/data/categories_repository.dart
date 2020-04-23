@@ -40,9 +40,7 @@ class CategoriesRepository {
   }
 
   Future<bool> updateSound(String soundId, bool isActive) async {
-    if (sounds.isEmpty) {
-      return false;
-    }
+    if(sounds.isEmpty) return false;
 
     int soundIndex = sounds.indexWhere((sound) => sound.id == soundId);
     if (soundIndex > 0) {

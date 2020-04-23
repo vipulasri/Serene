@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/model/sound.dart';
 
 class SoundButton extends StatefulWidget {
@@ -22,7 +24,20 @@ class SoundButtonState extends State<SoundButton> {
   double volume = 5;
 
   @override
+  void initState() {
+    super.initState();
+    active = widget.sound.isActive;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _onButtonClick() {
+      setState(() {
+        active = !active;
+      });
+      BlocProvider.of<SoundBloc>(context)
+          .add(UpdateSound(soundId: widget.sound.id, isActive: active));
+    }
     return Container(
         child: InkWell(
             splashColor: Colors.black,
@@ -38,11 +53,7 @@ class SoundButtonState extends State<SoundButton> {
                 volumeSlider()
               ],
             ),
-          onTap: () {
-            setState(() {
-              active = !active;
-            });
-          },
+          onTap: _onButtonClick,
         )
     );
   }

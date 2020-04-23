@@ -5,13 +5,13 @@ class Sound {
   String id;
   String title;
   String icon;
-  bool isActive;
+  bool isActive = false;
 
   Sound({
     @required this.id,
     @required this.title,
     @required this.icon,
-    bool isActive
+    this.isActive = false,
   });
 
   Sound copyWith({

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:serene/blocs/result_state.dart';
 import 'package:serene/data/categories_repository.dart';
+import 'package:serene/model/sound.dart';
 
 class SoundBloc extends Bloc<SoundEvent, Result> {
   final CategoriesRepository repository;
@@ -21,7 +22,7 @@ class SoundBloc extends Bloc<SoundEvent, Result> {
     }
   }
 
-  Stream<Result> _mapFetchSoundsToState(FetchSounds event) async* {
+  Stream<Result<List<Sound>>> _mapFetchSoundsToState(FetchSounds event) async* {
     yield Loading();
     try {
       yield Success(await repository.loadSounds(event.categoryId));
@@ -30,10 +31,10 @@ class SoundBloc extends Bloc<SoundEvent, Result> {
     }
   }
 
-  Stream<Result> _mapUpdateSoundToState(UpdateSound event) async* {
+  Stream<Result<List<Sound>>> _mapUpdateSoundToState(UpdateSound event) async* {
     try {
-      yield Success(
-          await repository.updateSound(event.soundId, event.isActive));
+      await repository.updateSound(event.soundId, event.isActive); //update
+      _mapFetchSoundsToState(FetchSounds(categoryId: event.soundId.substring(0, 1))); // return the updated sounds
     } catch (error) {
       yield Error(error);
     }
