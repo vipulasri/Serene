@@ -8,47 +8,56 @@
       {
         "id": "101",
         "title": "Airplane",
-        "icon": "ic_airplane_normal.png"
+        "icon": "ic_airplane_normal.png",
+        "audio": "city_airplane.ogg"
       },
       {
         "id": "102",
         "title": "Car",
-        "icon": "ic_car_normal.png"
+        "icon": "ic_car_normal.png",
+        "audio": "city_car.ogg"
       },
       {
         "id": "103",
         "title": "Fan",
-        "icon": "ic_fan_normal.png"
+        "icon": "ic_fan_normal.png",
+        "audio": "city_fan.ogg"
       },
       {
         "id": "104",
         "title": "Keyboard",
-        "icon": "ic_keyboard_normal.png"
+        "icon": "ic_keyboard_normal.png",
+        "audio": "city_keyboard.ogg"
       },
       {
         "id": "105",
         "title": "Rails",
-        "icon": "ic_rails_normal.png"
+        "icon": "ic_rails_normal.png",
+        "audio": "city_rails.ogg"
       },
       {
         "id": "106",
         "title": "Restaurant",
-        "icon": "ic_restaurant_normal.png"
+        "icon": "ic_restaurant_normal.png",
+        "audio": "city_restaurant.ogg"
       },
       {
         "id": "107",
         "title": "Subway",
-        "icon": "ic_subway_normal.png"
+        "icon": "ic_subway_normal.png",
+        "audio": "city_subway.ogg"
       },
       {
         "id": "108",
         "title": "Traffic",
-        "icon": "ic_traffic_normal.png"
+        "icon": "ic_traffic_normal.png",
+        "audio": "city_traffic.ogg"
       },
       {
         "id": "109",
         "title": "Washing Machine",
-        "icon": "ic_washing_machine_normal.png"
+        "icon": "ic_washing_machine_normal.png",
+        "audio": "city_washing_machine.ogg"
       }
     ]
   },
@@ -61,47 +70,56 @@
       {
         "id": "201",
         "title": "Bells",
-        "icon": "ic_bells_normal.png"
+        "icon": "ic_bells_normal.png",
+        "audio": "meditation_bells.ogg"
       },
       {
         "id": "202",
         "title": "Bowl",
-        "icon": "ic_bowl_normal.png"
+        "icon": "ic_bowl_normal.png",
+        "audio": "meditation_bowl.ogg"
       },
       {
         "id": "203",
         "title": "Brown Noise",
-        "icon": "ic_brown_noise_normal.png"
+        "icon": "ic_brown_noise_normal.png",
+        "audio": "meditation_brown_noise.ogg"
       },
       {
         "id": "204",
         "title": "Flute",
-        "icon": "ic_flute_normal.png"
+        "icon": "ic_flute_normal.png",
+        "audio": "meditation_flute.ogg"
       },
       {
         "id": "205",
         "title": "Piano",
-        "icon": "ic_piano_normal.png"
+        "icon": "ic_piano_normal.png",
+        "audio": "meditation_piano.ogg"
       },
       {
         "id": "206",
         "title": "Pink Noise",
-        "icon": "ic_pink_noise_normal.png"
+        "icon": "ic_pink_noise_normal.png",
+        "audio": "meditation_pink_noise.ogg"
       },
       {
         "id": "207",
         "title": "Stones",
-        "icon": "ic_stones_normal.png"
+        "icon": "ic_stones_normal.png",
+        "audio": "meditation_stones.ogg"
       },
       {
         "id": "208",
         "title": "White Noise",
-        "icon": "ic_white_noise_normal.png"
+        "icon": "ic_white_noise_normal.png",
+        "audio": "meditation_white_noise.ogg"
       },
       {
         "id": "209",
         "title": "Wind Chimes",
-        "icon": "ic_wind_chimes_normal.png"
+        "icon": "ic_wind_chimes_normal.png",
+        "audio": "meditation_wind_chimes.ogg"
       }
     ]
   },
@@ -114,47 +132,56 @@
       {
         "id": "301",
         "title": "Birds",
-        "icon": "ic_birds_normal.png"
+        "icon": "ic_birds_normal.png",
+        "audio": "forest_birds.ogg"
       },
       {
         "id": "302",
         "title": "Creek",
-        "icon": "ic_creek_normal.png"
+        "icon": "ic_creek_normal.png",
+        "audio": "forest_creek.ogg"
       },
       {
         "id": "303",
         "title": "Fire",
-        "icon": "ic_fire_normal.png"
+        "icon": "ic_fire_normal.png",
+        "audio": "forest_fire.ogg"
       },
       {
         "id": "304",
         "title": "Forest",
-        "icon": "ic_forest_normal.png"
+        "icon": "ic_forest_normal.png",
+        "audio": "forest_forest.ogg"
       },
       {
         "id": "305",
         "title": "Frogs",
-        "icon": "ic_frogs_normal.png"
+        "icon": "ic_frogs_normal.png",
+        "audio": "forest_frogs.ogg"
       },
       {
         "id": "306",
         "title": "Grasshoppers",
-        "icon": "ic_grasshoppers_normal.png"
+        "icon": "ic_grasshoppers_normal.png",
+        "audio": "forest_grasshoppers.ogg"
       },
       {
         "id": "307",
         "title": "Leaves",
-        "icon": "ic_leaves_normal.png"
+        "icon": "ic_leaves_normal.png",
+        "audio": "forest_leaves.ogg"
       },
       {
         "id": "308",
         "title": "Waterfall",
-        "icon": "ic_waterfall_normal.png"
+        "icon": "ic_waterfall_normal.png",
+        "audio": "forest_waterfall.ogg"
       },
       {
         "id": "309",
         "title": "Wind",
-        "icon": "ic_wind_normal.png"
+        "icon": "ic_wind_normal.png",
+        "audio": "forest_wind.ogg"
       }
     ]
   },
@@ -167,47 +194,56 @@
       {
         "id": "401",
         "title": "Light Rain",
-        "icon": "ic_light_normal.png"
+        "icon": "ic_light_normal.png",
+        "audio": "rain_light.ogg"
       },
       {
         "id": "402",
         "title": "Ocean",
-        "icon": "ic_ocean_normal.png"
+        "icon": "ic_ocean_normal.png",
+        "audio": "rain_ocean.ogg"
       },
       {
         "id": "403",
         "title": "On Leaves",
-        "icon": "ic_on_leaves_normal.png"
+        "icon": "ic_on_leaves_normal.png",
+        "audio": "rain_on_leaves.ogg"
       },
       {
         "id": "404",
         "title": "On Roof",
-        "icon": "ic_on_roof_normal.png"
+        "icon": "ic_on_roof_normal.png",
+        "audio": "rain_on_roof.ogg"
       },
       {
         "id": "405",
         "title": "On Window",
-        "icon": "ic_on_window_normal.png"
+        "icon": "ic_on_window_normal.png",
+        "audio": "rain_on_window.ogg"
       },
       {
         "id": "406",
         "title": "Rain",
-        "icon": "ic_rain_normal.png"
+        "icon": "ic_rain_normal.png",
+        "audio": "rain_normal.ogg"
       },
       {
         "id": "407",
         "title": "Thunders",
-        "icon": "ic_thunders_normal.png"
+        "icon": "ic_thunders_normal.png",
+        "audio": "rain_thunders.ogg"
       },
       {
         "id": "408",
         "title": "Umbrella",
-        "icon": "ic_under_umbrella_normal.png"
+        "icon": "ic_under_umbrella_normal.png",
+        "audio": "rain_under_umbrella.ogg"
       },
       {
         "id": "409",
         "title": "Water Drops",
-        "icon": "ic_water_normal.png"
+        "icon": "ic_water_normal.png",
+        "audio": "rain_water.ogg"
       }
     ]
   }
