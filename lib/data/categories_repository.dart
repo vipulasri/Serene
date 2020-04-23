@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:serene/config/assets.dart';
+import 'package:serene/manager/audio_manager.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
 
@@ -46,6 +47,13 @@ class CategoriesRepository {
     if (soundIndex > 0) {
       Sound sound = sounds[soundIndex].copyWith(active: active, volume: volume);
       sounds[soundIndex] = sound;
+
+      if(active) {
+        AudioManager.instance.play(sound);
+      } else {
+        AudioManager.instance.stop(sound);
+      }
+
       return true;
     }
 
