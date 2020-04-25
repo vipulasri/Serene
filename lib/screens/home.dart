@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/blocs/blocs.dart';
 import 'package:serene/blocs/result_state.dart';
+import 'package:serene/config/constants.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(FetchCategories());
-    controller = AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+    controller = AnimationController(duration: const Duration(milliseconds: Constants.animationDuration), vsync: this);
   }
 
   @override
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 label: AnimatedSize(
                   vsync: this,
-                  duration: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: Constants.animationDuration),
                   child: Text(
                       isPlaying? "Pause" : "Play"
                   ),
