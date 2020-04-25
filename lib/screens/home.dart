@@ -85,14 +85,14 @@ class _HomePageState extends State<HomePage> {
       itemCount: 4,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) =>
-          bottomElement(categories[index]),
+          categoryView(categories[index]),
       staggeredTileBuilder: (int index) => _staggeredTiles[index],
       mainAxisSpacing: Dimen.padding,
       crossAxisSpacing: Dimen.padding,
     );
   }
 
-  Widget bottomElement(Category category) {
+  Widget categoryView(Category category) {
     return OpenContainer(
       transitionType: ContainerTransitionType.fade,
       openBuilder: (BuildContext context, VoidCallback _) {

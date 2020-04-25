@@ -5,22 +5,18 @@ import 'package:serene/data/categories_repository.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/screens/details_view.dart';
 
-class CategoryDetailsPage extends StatefulWidget {
+class CategoryDetailsPage extends StatelessWidget {
   final Category category;
 
   CategoryDetailsPage({Key key, @required this.category}) : super(key: key);
 
   @override
-  _CategoryDetailsState createState() => _CategoryDetailsState();
-}
-
-class _CategoryDetailsState extends State<CategoryDetailsPage> {
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SoundBloc(
           repository: RepositoryProvider.of<CategoriesRepository>(context)),
-      child: DetailsView(category: widget.category),
+      child: DetailsView(category: category),
     );
   }
+
 }

@@ -64,39 +64,17 @@ class _DetailsViewState extends State<DetailsView> {
             appBar(),
             SizedBox(height: Dimen.padding * 4),
             Expanded(
-                child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Dimen.cornerRadius),
-                        topRight: Radius.circular(Dimen.cornerRadius)),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                      child: Container(
-                          height: double.infinity,
-                          width: double.infinity,
-                          decoration: new BoxDecoration(
-                              color: Colors.grey.shade200.withOpacity(0.4)),
-                          child: Padding(
-                            padding: EdgeInsets.all(Dimen.padding),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    width: 50,
-                                    height: 4,
-                                  ),
-                                ),
-                                SizedBox(height: Dimen.padding),
-                                showSounds()
-                              ],
-                            ),
-                          )),
-                    )))
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
+                  children: [
+                    blurBackground(),
+                    sheetContentArea()
+                  ],
+                )
+              ),
+            )
           ],
         ),
       ),
@@ -107,7 +85,7 @@ class _DetailsViewState extends State<DetailsView> {
     return Container(
         child: Padding(
           padding: EdgeInsets.symmetric(
-          vertical: Dimen.padding, horizontal: Dimen.padding),
+              vertical: Dimen.padding, horizontal: Dimen.padding),
           child: Row(
             children: [
               Text(
@@ -133,6 +111,43 @@ class _DetailsViewState extends State<DetailsView> {
     );
   }
 
+  Widget blurBackground() {
+    return ClipRRect(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(Dimen.cornerRadius),
+            topRight: Radius.circular(Dimen.cornerRadius)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+          child: Container(
+              decoration: new BoxDecoration(
+                  color: Colors.grey.shade200.withOpacity(0.4))),
+        ));
+  }
+
+  Widget sheetContentArea() {
+    return Padding(
+      padding: EdgeInsets.all(Dimen.padding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              width: 50,
+              height: 4,
+            ),
+          ),
+          SizedBox(height: Dimen.padding),
+          showSounds()
+        ],
+      ),
+    );
+  }
+
   Widget showSounds() {
     return BlocBuilder<SoundBloc, Result>(builder: (context, state) {
       if (state is Empty) {
@@ -154,6 +169,7 @@ class _DetailsViewState extends State<DetailsView> {
   Widget sheetContent(List<Sound> sounds) {
     return Expanded(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Sounds",
