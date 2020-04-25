@@ -98,6 +98,7 @@ class _HomePageState extends State<HomePage> {
       openBuilder: (BuildContext context, VoidCallback _) {
         return CategoryDetailsPage(category: category);
       },
+      closedColor: category.color,
       closedShape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(Dimen.cornerRadius),
