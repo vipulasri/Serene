@@ -14,11 +14,16 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
+  bool isPlaying = false;
+  AnimationController controller;
+
   @override
   void initState() {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(FetchCategories());
+    controller = AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
   }
 
   @override
@@ -45,6 +50,23 @@ class _HomePageState extends State<HomePage> {
             Text(
               "Serene",
               style: AppTypography.appTitle().copyWith(color: Colors.white),
+            ),
+            Spacer(),
+            RaisedButton.icon(
+              onPressed: _onPlayButtonPressed,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                icon: AnimatedIcon(
+                  icon: AnimatedIcons.play_pause,
+                  progress: controller,
+                ),
+                label: AnimatedSize(
+                  vsync: this,
+                  duration: const Duration(milliseconds: 500),
+                  child: Text(
+                      isPlaying? "Pause" : "Play"
+                  ),
+                )
             ),
             Spacer(),
             showCategories()
@@ -128,4 +150,20 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  _onPlayButtonPressed() {
+    setState(() {
+      isPlaying = !isPlaying;
+      isPlaying
+          ? controller.forward()
+          : controller.reverse();
+    });
+  }
+
 }
