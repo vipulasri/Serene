@@ -44,7 +44,7 @@ class CategoriesRepository {
     if(sounds.isEmpty) return false;
 
     int soundIndex = sounds.indexWhere((sound) => sound.id == soundId);
-    if (soundIndex > 0) {
+    if (soundIndex > -1) {
       Sound sound = sounds[soundIndex].copyWith(active: active, volume: volume);
       sounds[soundIndex] = sound;
 
