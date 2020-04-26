@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/blocs/blocs.dart';
 import 'package:serene/blocs/result_state.dart';
+import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/config/constants.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
+import 'package:serene/model/sound.dart';
 import 'package:serene/screens/category_details_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-
   bool isPlaying = false;
   AnimationController controller;
 
@@ -24,7 +25,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(FetchCategories());
-    controller = AnimationController(duration: const Duration(milliseconds: Constants.animationDuration), vsync: this);
+    controller = AnimationController(
+        duration: const Duration(milliseconds: Constants.animationDuration),
+        vsync: this);
   }
 
   @override
@@ -41,6 +44,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget contentArea() {
+    BlocProvider.of<SoundBloc>(context).add(FetchPlayingSounds());
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
@@ -53,22 +57,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               style: AppTypography.appTitle().copyWith(color: Colors.white),
             ),
             Spacer(),
-            RaisedButton.icon(
-              onPressed: _onPlayButtonPressed,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                icon: AnimatedIcon(
-                  icon: AnimatedIcons.play_pause,
-                  progress: controller,
-                ),
-                label: AnimatedSize(
-                  vsync: this,
-                  duration: const Duration(milliseconds: Constants.animationDuration),
-                  child: Text(
-                      isPlaying? "Pause" : "Play"
-                  ),
-                )
-            ),
+            showPlayButton(),
             Spacer(),
             showCategories()
           ],
@@ -77,8 +66,51 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
+  Widget showPlayButton() {
+    return BlocBuilder<SoundBloc, Result>(
+      condition: (previousState, state) {
+        if (previousState is Success && state is Success) {
+          return previousState.value != state.value;
+        }
+        return previousState != state;
+      },
+      builder: (context, state) {
+        if (state is Success) {
+          isPlaying = (state.value as List<Sound>).isNotEmpty;
+        } else {
+          isPlaying = false;
+        }
+
+        isPlaying ? controller.forward() : controller.reverse();
+
+        return RaisedButton.icon(
+            onPressed: _onPlayButtonPressed,
+            color: Colors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            icon: AnimatedIcon(
+              icon: AnimatedIcons.play_pause,
+              progress: controller,
+            ),
+            label: AnimatedSize(
+              vsync: this,
+              duration:
+                  const Duration(milliseconds: Constants.animationDuration),
+              child: Text(isPlaying ? "Pause" : "Play"),
+            ));
+      },
+    );
+  }
+
   Widget showCategories() {
-    return BlocBuilder<CategoryBloc, Result>(builder: (context, state) {
+    return BlocBuilder<CategoryBloc, Result>(condition: (previousState, state) {
+      if (previousState == state &&
+          previousState is Success &&
+          state is Success) {
+        return previousState.value == state.value;
+      }
+      return previousState != state;
+    }, builder: (context, state) {
       if (state is Empty) {
         return Center(child: Text('No Categories Found'));
       }
@@ -158,13 +190,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  _onPlayButtonPressed() {
-    setState(() {
-      isPlaying = !isPlaying;
-      isPlaying
-          ? controller.forward()
-          : controller.reverse();
-    });
+  _onPlayButtonPressed() async {
+    BlocProvider.of<SoundBloc>(context).add(TogglePlayButton());
   }
-
 }

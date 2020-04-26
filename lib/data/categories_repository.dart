@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:serene/config/assets.dart';
+import 'package:serene/config/helper.dart';
 import 'package:serene/manager/audio_manager.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
@@ -40,15 +41,47 @@ class CategoriesRepository {
         .toList(); //sound id = 201, 2 is category id
   }
 
+  Future<List<Sound>> getPlayingSounds() async {
+    return sounds.where((sound) => sound.active).toList();
+  }
+
+  Future<List<Sound>> playAllPreviouslyPlayingSounds() async {
+    List<String> playingIds = await AudioManager.instance.playAll();
+
+    sounds = sounds.map((element) {
+      element.active = playingIds.contains(element.id);
+      return element;
+    }).toList();
+
+    return getPlayingSounds();
+  }
+
+  Future<List<Sound>> stopAllPlayingSounds() async {
+    sounds = sounds.map((element) {
+      element.active = false;
+      return element;
+    }).toList();
+
+    await AudioManager.instance.stopAll();
+    return []; // return empty list, as none sound is playing
+  }
+
+  Future<void> playRandom() async {
+    if (sounds.isEmpty) return;
+
+    AudioManager.instance
+        .play(sounds[Helper.getRandomNumber(0, sounds.length)]);
+  }
+
   Future<bool> updateSound(String soundId, bool active, double volume) async {
-    if(sounds.isEmpty) return false;
+    if (sounds.isEmpty) return false;
 
     int soundIndex = sounds.indexWhere((sound) => sound.id == soundId);
     if (soundIndex > -1) {
       Sound sound = sounds[soundIndex].copyWith(active: active, volume: volume);
       sounds[soundIndex] = sound;
 
-      if(active) {
+      if (active) {
         AudioManager.instance.play(sound);
       } else {
         AudioManager.instance.stop(sound);
