@@ -24,6 +24,10 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _onAfterBuild(context));
+  }
+
+  void _onAfterBuild(BuildContext context){
     BlocProvider.of<SoundBloc>(context)
         .add(FetchSounds(categoryId: widget.category.id));
   }
@@ -169,7 +173,7 @@ class _DetailsViewState extends State<DetailsView> {
   Widget sheetContent(List<Sound> sounds) {
     return Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             "Sounds",
