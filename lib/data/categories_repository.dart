@@ -48,6 +48,10 @@ class CategoriesRepository {
   Future<List<Sound>> playAllPreviouslyPlayingSounds() async {
     List<String> playingIds = await AudioManager.instance.playAll();
 
+    if(playingIds.isEmpty) {
+      return _playRandom(); // play a random sound
+    }
+
     sounds = sounds.map((element) {
       element.active = playingIds.contains(element.id);
       return element;
@@ -66,11 +70,10 @@ class CategoriesRepository {
     return []; // return empty list, as none sound is playing
   }
 
-  Future<void> playRandom() async {
-    if (sounds.isEmpty) return;
-
-    AudioManager.instance
-        .play(sounds[Helper.getRandomNumber(0, sounds.length)]);
+  Future<List<Sound>> _playRandom() async {
+    Sound randomSound = sounds[Helper.getRandomNumber(0, sounds.length)];
+    updateSound(randomSound.id, true, 5);
+    return getPlayingSounds();
   }
 
   Future<bool> updateSound(String soundId, bool active, double volume) async {
