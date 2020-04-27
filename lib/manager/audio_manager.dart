@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:serene/config/constants.dart';
 import 'package:serene/model/sound.dart';
 
 class AudioManager {
@@ -55,7 +56,7 @@ class AudioManager {
       }
       playing[sound.id] = await player.loop(sound.audio, volume: sound.volume);
     }
-    playing[sound.id].setVolume(sound.volume);
+    playing[sound.id].setVolume(sound.volume / Constants.maxSliderValue); // volume applies between 0 and 1
     playing[sound.id].resume();
   }
 

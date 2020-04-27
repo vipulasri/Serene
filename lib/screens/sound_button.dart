@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/sound_bloc.dart';
+import 'package:serene/config/constants.dart';
 import 'package:serene/model/sound.dart';
 
 class SoundButton extends StatefulWidget {
@@ -79,8 +80,8 @@ class SoundButtonState extends State<SoundButton> {
       ),
       child: Slider(
         value: volume,
-        min: 1,
-        max: 10,
+        min: Constants.minSliderValue,
+        max: Constants.maxSliderValue,
         onChanged: active
             ? (double newValue) {
                 _onVolumeChanged(newValue.round().toDouble());
