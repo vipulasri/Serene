@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/blocs/blocs.dart';
@@ -7,6 +8,7 @@ import 'package:serene/blocs/result_state.dart';
 import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/config/constants.dart';
 import 'package:serene/config/dimen.dart';
+import 'package:serene/config/plurals.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
@@ -75,29 +77,67 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         return previousState != state;
       },
       builder: (context, state) {
+        int playingItems = 0;
         if (state is Success) {
-          isPlaying = (state.value as List<Sound>).isNotEmpty;
+          if((state.value as List<Sound>).isNotEmpty) {
+            isPlaying = true;
+            playingItems = (state.value as List<Sound>).length;
+          } else {
+            isPlaying = false;
+            playingItems = 0;
+          }
         } else {
           isPlaying = false;
         }
 
         isPlaying ? controller.forward() : controller.reverse();
 
-        return RaisedButton.icon(
-            onPressed: _onPlayButtonPressed,
-            color: Colors.white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            icon: AnimatedIcon(
-              icon: AnimatedIcons.play_pause,
-              progress: controller,
+        return Stack(
+          alignment: AlignmentDirectional.centerStart,
+          overflow: Overflow.visible,
+          children: [
+            AnimatedContainer(
+              curve: Curves.fastOutSlowIn,
+              duration: Duration(seconds: Constants.animationDuration),
+              height: 40,
+              transform: Matrix4.translationValues(20.0, 00.0, 0.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(100),
+                    bottomRight: Radius.circular(100),
+                  )
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(width: 15),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
+                    child: Text(isPlaying ? Plurals.currentlyPlayingSounds(playingItems) : "Play"),
+                  )
+                ],
+              ),
             ),
-            label: AnimatedSize(
-              vsync: this,
-              duration:
-                  const Duration(milliseconds: Constants.animationDuration),
-              child: Text(isPlaying ? "Pause" : "Play"),
-            ));
+            InkWell(
+              onTap: _onPlayButtonPressed,
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100)
+                ),
+                child: Center(
+                  child: AnimatedIcon(
+                    icon: AnimatedIcons.play_pause,
+                    progress: controller,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
       },
     );
   }
