@@ -8,7 +8,7 @@ import 'package:serene/config/dimen.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
-import 'package:serene/screens/sound_button.dart';
+import 'package:serene/screens/details/sound_button.dart';
 
 class DetailsView extends StatefulWidget {
   final Category category;

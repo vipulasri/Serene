@@ -12,7 +12,7 @@ import 'package:serene/config/plurals.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
-import 'package:serene/screens/category_details_page.dart';
+import 'package:serene/screens/details/category_details_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

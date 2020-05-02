@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/blocs.dart';
 import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/data/repository.dart';
-import 'package:serene/screens/home.dart';
+import 'package:serene/screens/home/home_page.dart';
 
 import 'blocs/simple_bloc_delegate.dart';
 

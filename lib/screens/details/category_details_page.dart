@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/data/repository.dart';
 import 'package:serene/model/category.dart';
-import 'package:serene/screens/details_view.dart';
+import 'package:serene/screens/details/details_view.dart';
 
 class CategoryDetailsPage extends StatelessWidget {
   final Category category;
