@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/blocs.dart';
 import 'package:serene/blocs/sound_bloc.dart';
-import 'package:serene/data/categories_repository.dart';
+import 'package:serene/data/repository.dart';
 import 'package:serene/screens/home.dart';
 
 import 'blocs/simple_bloc_delegate.dart';
@@ -17,11 +17,11 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<CategoriesRepository>(
-      create: (_) => CategoriesRepository(),
+    return RepositoryProvider<DataRepository>(
+      create: (_) => DataRepository(),
       child: BlocProvider(
         create: (context) => CategoryBloc(
-            repository: RepositoryProvider.of<CategoriesRepository>(context)),
+            repository: RepositoryProvider.of<DataRepository>(context)),
         child: app(),
       ),
     );
@@ -45,12 +45,12 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => CategoryBloc(
                 repository:
-                    RepositoryProvider.of<CategoriesRepository>(context)),
+                    RepositoryProvider.of<DataRepository>(context)),
           ),
           BlocProvider(
             create: (context) => SoundBloc(
                 repository:
-                    RepositoryProvider.of<CategoriesRepository>(context)),
+                    RepositoryProvider.of<DataRepository>(context)),
           ),
         ],
         child: HomePage(),

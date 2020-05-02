@@ -4,11 +4,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:serene/blocs/result_state.dart';
-import 'package:serene/data/categories_repository.dart';
+import 'package:serene/data/repository.dart';
 import 'package:serene/model/category.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, Result> {
-  final CategoriesRepository repository;
+  final DataRepository repository;
 
   CategoryBloc({@required this.repository}) : assert(repository != null);
 

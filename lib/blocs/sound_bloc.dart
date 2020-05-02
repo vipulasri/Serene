@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:serene/blocs/result_state.dart';
-import 'package:serene/data/categories_repository.dart';
+import 'package:serene/data/repository.dart';
 import 'package:serene/model/sound.dart';
 
 class SoundBloc extends Bloc<SoundEvent, Result> {
-  final CategoriesRepository repository;
+  final DataRepository repository;
 
   SoundBloc({@required this.repository}) : assert(repository != null);
 

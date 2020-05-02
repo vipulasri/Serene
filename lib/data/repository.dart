@@ -5,7 +5,7 @@ import 'package:serene/manager/audio_manager.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
 
-class CategoriesRepository {
+class DataRepository {
   // in-memory categories
   List<Category> categories = <Category>[];
   List<Sound> sounds = <Sound>[];

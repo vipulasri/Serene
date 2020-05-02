@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/sound_bloc.dart';
-import 'package:serene/data/categories_repository.dart';
+import 'package:serene/data/repository.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/screens/details_view.dart';
 
@@ -14,7 +14,7 @@ class CategoryDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SoundBloc(
-          repository: RepositoryProvider.of<CategoriesRepository>(context)),
+          repository: RepositoryProvider.of<DataRepository>(context)),
       child: DetailsView(category: category),
     );
   }
