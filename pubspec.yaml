@@ -40,3 +40,8 @@ flutter:
           weight: 500
         - asset: fonts/HaasGrotesk-Bold.ttf
           weight: 700
+    - family: Caveat
+      fonts:
+        - asset: fonts/Caveat-Bold.ttf
+          weight: 700
+

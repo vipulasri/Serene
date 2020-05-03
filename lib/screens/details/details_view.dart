@@ -177,7 +177,7 @@ class _DetailsViewState extends State<DetailsView> {
         children: [
           Text(
             "Sounds",
-            style: AppTypography.body2().copyWith(fontSize: 14),
+            style: AppTypography.body2(),
           ),
           SizedBox(height: Dimen.padding * 2),
           Expanded(

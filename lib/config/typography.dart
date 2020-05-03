@@ -6,8 +6,8 @@ class AppTypography {
 
   static TextStyle appTitle() {
     return TextStyle(
-        fontFamily: fontFamily,
-        fontSize: 22,
+        fontFamily: "Caveat",
+        fontSize: 40,
         fontWeight: FontWeight.w700,
         color: textColor);
   }
