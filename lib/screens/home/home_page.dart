@@ -115,7 +115,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     SizedBox(width: 15),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
-                      child: Text(isPlaying ? Plurals.playingSounds(playingItems) : "Play"),
+                      child: Text(isPlaying ? Plurals.playingSounds(playingItems) : "Play",
+                        style: AppTypography.body()),
                     )
                   ],
                 ),
@@ -267,7 +268,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Padding(
               padding: EdgeInsets.all(Dimen.padding),
               child: Center(
-                child: Text("${Plurals.currentlyPlayingSounds(sounds.length)}"),
+                child: Text("${Plurals.currentlyPlayingSounds(sounds.length)}",
+                    style: AppTypography.body()),
               ),
             )
           );
@@ -297,7 +299,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Center(
               child: Padding(
                 padding: EdgeInsets.all(Dimen.padding),
-                child: Text("${Plurals.currentlyPlayingSounds(0)}"),
+                child: Text("${Plurals.currentlyPlayingSounds(0)}",
+                    style: AppTypography.body()),
               ),
             )
           ],
