@@ -13,6 +13,7 @@ import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
 import 'package:serene/screens/details/category_details_page.dart';
+import 'package:serene/screens/home/playing_sound_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -59,16 +60,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               style: AppTypography.appTitle().copyWith(color: Colors.white),
             ),
             Spacer(),
-            showPlayButton(),
+            showPlayButton(context),
             Spacer(),
-            showCategories()
+            showCategories(),
           ],
         ),
       ),
     );
   }
 
-  Widget showPlayButton() {
+  Widget showPlayButton(BuildContext context) {
     return BlocBuilder<SoundBloc, Result>(
       condition: (previousState, state) {
         if (previousState is Success && state is Success) {
@@ -79,15 +80,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       builder: (context, state) {
         int playingItems = 0;
         if (state is Success) {
-          if((state.value as List<Sound>).isNotEmpty) {
-            isPlaying = true;
-            playingItems = (state.value as List<Sound>).length;
-          } else {
-            isPlaying = false;
-            playingItems = 0;
-          }
+          isPlaying = true;
+          playingItems = (state.value as List<Sound>).length;
         } else {
           isPlaying = false;
+          playingItems = 0;
         }
 
         isPlaying ? controller.forward() : controller.reverse();
@@ -96,27 +93,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           alignment: AlignmentDirectional.centerStart,
           overflow: Overflow.visible,
           children: [
-            AnimatedContainer(
-              curve: Curves.fastOutSlowIn,
-              duration: Duration(seconds: Constants.animationDuration),
-              height: 40,
-              transform: Matrix4.translationValues(20.0, 00.0, 0.0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(100),
-                    bottomRight: Radius.circular(100),
-                  )
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: 15),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
-                    child: Text(isPlaying ? Plurals.currentlyPlayingSounds(playingItems) : "Play"),
-                  )
-                ],
+            InkWell(
+              onTap: () {
+                _soundsPlayingModalBottomSheet(context);
+              },
+              child: AnimatedContainer(
+                curve: Curves.fastOutSlowIn,
+                duration: Duration(seconds: Constants.animationDuration),
+                height: 40,
+                transform: Matrix4.translationValues(20.0, 00.0, 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(100),
+                      bottomRight: Radius.circular(100),
+                    )
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 15),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
+                      child: Text(isPlaying ? Plurals.currentlyPlayingSounds(playingItems) : "Play"),
+                    )
+                  ],
+                ),
               ),
             ),
             InkWell(
@@ -232,5 +234,62 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   _onPlayButtonPressed() async {
     BlocProvider.of<SoundBloc>(context).add(TogglePlayButton());
+  }
+
+  void _soundsPlayingModalBottomSheet(BuildContext buildContext) {
+    showModalBottomSheet(
+        context: buildContext,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(Dimen.cornerRadius),
+            topRight: Radius.circular(Dimen.cornerRadius),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        builder: (BuildContext _) {
+          return BlocProvider.value(
+            value: BlocProvider.of<SoundBloc>(buildContext),
+            child: _showPlayingsSoundsList()
+          );
+        }
+    );
+  }
+
+  Widget _showPlayingsSoundsList() {
+    return BlocBuilder<SoundBloc, Result>(
+      builder: (context, state) {
+        if(state is Success) {
+
+          List<Widget> widgets = (state.value as List<Sound>).map((sound) =>
+              PlayingSoundView(sound: sound)
+          ).toList();
+
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: Dimen.padding), // give scrollbar padding
+            child: Scrollbar(
+              isAlwaysShown: true,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    children: widgets,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+        return Wrap(
+          children: [
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(Dimen.padding),
+                child: Text("No sounds selected"),
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
 }

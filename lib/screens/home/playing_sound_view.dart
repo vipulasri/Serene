@@ -1,62 +1,54 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/config/constants.dart';
 import 'package:serene/model/sound.dart';
 
-class SoundButton extends StatefulWidget {
+class PlayingSoundView extends StatefulWidget {
+
   final Sound sound;
 
-  SoundButton({@required this.sound});
+  PlayingSoundView({Key key, @required this.sound}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return SoundButtonState();
+    return PlayingSoundViewState();
   }
+  
 }
 
-class SoundButtonState extends State<SoundButton> {
-  final Color activeColor = Color(0xFF1D2632).withOpacity(0.8);
-  final Color inactiveColor = Color(0xFF1D2632).withOpacity(0.2);
+class PlayingSoundViewState extends State<PlayingSoundView> {
 
-  bool active = false;
+  final Color activeColor = Color(0xFF1D2632).withOpacity(0.8);
+
   double volume = 1;
 
   @override
   void initState() {
     super.initState();
-    active = widget.sound.active;
     volume = widget.sound.volume.toDouble();
   }
 
   @override
   Widget build(BuildContext context) {
-    _onButtonClick() {
-      setState(() {
-        this.active = !active;
-      });
-      BlocProvider.of<SoundBloc>(context)
-          .add(UpdateSound(soundId: widget.sound.id, active: active, volume: volume));
-    }
-    return Container(
-        child: InkWell(
-            splashColor: Colors.black,
-            child: Column(
-              children: [
-                MaterialButton(
-                  onPressed: null,
-                  child: Image.asset(
-                    widget.sound.icon,
-                    color: active ? activeColor : inactiveColor,
-                  ),
-                ),
-                volumeSlider()
-              ],
-            ),
-          onTap: _onButtonClick,
+    return Row(
+      children: [
+        Image.asset(widget.sound.icon,
+          width: 24,
+          height: 24,
+          color: activeColor,
+        ),
+        Expanded(
+          child: volumeSlider(),
+        ),
+        InkWell(
+          child: Icon(Icons.close, color: activeColor),
+          onTap: () {
+            BlocProvider.of<SoundBloc>(context).add(StopSound(soundId: widget.sound.id));
+          },
         )
+      ],
     );
   }
 
@@ -66,14 +58,13 @@ class SoundButtonState extends State<SoundButton> {
         this.volume = volume;
       });
       BlocProvider.of<SoundBloc>(context)
-          .add(UpdateSound(soundId: widget.sound.id, active: active, volume: volume));
+          .add(UpdateSound(soundId: widget.sound.id, active: true, volume: volume));
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         activeTrackColor: activeColor,
         inactiveTrackColor: activeColor.withOpacity(0.5),
         disabledActiveTrackColor: activeColor.withOpacity(0.2),
-        disabledThumbColor: inactiveColor,
         trackShape: RoundedRectSliderTrackShape(),
         thumbColor: activeColor,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
@@ -82,12 +73,11 @@ class SoundButtonState extends State<SoundButton> {
         value: volume,
         min: Constants.minSliderValue,
         max: Constants.maxSliderValue,
-        onChanged: active
-            ? (double newValue) {
-                _onVolumeChanged(newValue.round().toDouble());
-              }
-            : null,
+        onChanged: (double newValue) {
+          _onVolumeChanged(newValue.round().toDouble());
+        }
       ),
     );
   }
+
 }
