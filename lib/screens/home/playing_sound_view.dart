@@ -20,13 +20,15 @@ class PlayingSoundView extends StatefulWidget {
 
 class PlayingSoundViewState extends State<PlayingSoundView> {
 
-  final Color activeColor = Color(0xFF1D2632).withOpacity(0.8);
+  Color activeColor = Color(0xFF1D2632).withOpacity(0.8);
+  Color volumeColor = Color(0xFF1D2632).withOpacity(0.8);
 
   double volume = 1;
 
   @override
   void initState() {
     super.initState();
+    volumeColor = widget.sound.color.withOpacity(0.8);
     volume = widget.sound.volume.toDouble();
   }
 
@@ -43,7 +45,7 @@ class PlayingSoundViewState extends State<PlayingSoundView> {
           child: volumeSlider(),
         ),
         InkWell(
-          child: Icon(Icons.close, color: activeColor),
+          child: Icon(Icons.close, color: Color(0xFF1D2632).withOpacity(0.8)),
           onTap: () {
             BlocProvider.of<SoundBloc>(context).add(StopSound(soundId: widget.sound.id));
           },
@@ -62,11 +64,11 @@ class PlayingSoundViewState extends State<PlayingSoundView> {
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        activeTrackColor: activeColor,
-        inactiveTrackColor: activeColor.withOpacity(0.5),
-        disabledActiveTrackColor: activeColor.withOpacity(0.2),
+        activeTrackColor: volumeColor,
+        inactiveTrackColor: volumeColor.withOpacity(0.5),
+        disabledActiveTrackColor: volumeColor.withOpacity(0.2),
         trackShape: RoundedRectSliderTrackShape(),
-        thumbColor: activeColor,
+        thumbColor: volumeColor,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
       ),
       child: Slider(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:meta/meta.dart';
 
 class Sound {
@@ -7,6 +9,7 @@ class Sound {
   String audio;
   bool active;
   double volume;
+  Color color;
 
   Sound({
     @required this.id,
@@ -14,7 +17,8 @@ class Sound {
     @required this.icon,
     @required this.audio,
     this.active = false,
-    this.volume = 5
+    this.volume = 5,
+    this.color
   });
 
   Sound copyWith({
@@ -23,7 +27,8 @@ class Sound {
     String icon,
     String audio,
     bool active,
-    double volume
+    double volume,
+    Color color
   }) =>
       Sound(
         id: id ?? this.id,
@@ -31,7 +36,8 @@ class Sound {
         icon: icon ?? this.icon,
         audio: audio?? this.audio,
         active: active?? this.active,
-        volume: volume?? this.volume
+        volume: volume?? this.volume,
+        color: color?? this.color
       );
 
   factory Sound.fromJson(Map<String, dynamic> json) => Sound(

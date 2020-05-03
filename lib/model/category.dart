@@ -6,10 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:serene/config/assets.dart';
 import 'package:serene/model/sound.dart';
 
-List<Category> categoryFromJson(String str) => List<Category>.from(json.decode(str).map((category) => Category.fromJson(category).copyWith(
-  color: getCategoryColor(category["id"]),
-  icon: Assets.baseImagesPath + category["icon"]
-)));
+List<Category> categoryFromJson(String str) => List<Category>.from(json.decode(str).map((category) => Category.fromJson(category)));
 
 String categoryToJson(List<Category> data) => json.encode(List<dynamic>.from(data.map((category) => category.toJson())));
 
@@ -46,10 +43,12 @@ class Category {
   factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     title: json["title"],
-    icon: json["icon"],
+    icon: Assets.baseImagesPath + json["icon"],
+    color: getCategoryColor(json["id"]),
     sounds: List<Sound>.from(json["sounds"].map((sound) => Sound.fromJson(sound).copyWith(
       icon: Assets.baseImagesPath + json["title"].toLowerCase() + "/" + sound["icon"], // ex: assets/images/city/ic_airplane.png
-      audio: Assets.baseSoundsPath + sound["audio"]
+      audio: Assets.baseSoundsPath + sound["audio"],
+      color: getCategoryColor(json["id"])
     ))),
   );
 

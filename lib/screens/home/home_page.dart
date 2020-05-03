@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     SizedBox(width: 15),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
-                      child: Text(isPlaying ? Plurals.currentlyPlayingSounds(playingItems) : "Play"),
+                      child: Text(isPlaying ? Plurals.playingSounds(playingItems) : "Play"),
                     )
                   ],
                 ),
@@ -260,9 +260,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       builder: (context, state) {
         if(state is Success) {
 
-          List<Widget> widgets = (state.value as List<Sound>).map((sound) =>
-              PlayingSoundView(sound: sound)
-          ).toList();
+          List<Sound> sounds = (state.value as List<Sound>);
+
+          List<Widget> widgets = [];
+          widgets.add(
+            Padding(
+              padding: EdgeInsets.all(Dimen.padding),
+              child: Center(
+                child: Text("${Plurals.currentlyPlayingSounds(sounds.length)}"),
+              ),
+            )
+          );
+          widgets.addAll(
+              sounds.map((sound) =>
+                  PlayingSoundView(sound: sound)
+              ).toList()
+          );
 
           return Padding(
             padding: EdgeInsets.symmetric(vertical: Dimen.padding), // give scrollbar padding
@@ -284,7 +297,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Center(
               child: Padding(
                 padding: EdgeInsets.all(Dimen.padding),
-                child: Text("No sounds selected"),
+                child: Text("${Plurals.currentlyPlayingSounds(0)}"),
               ),
             )
           ],
