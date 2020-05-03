@@ -61,6 +61,7 @@ class _DetailsViewState extends State<DetailsView> {
 
   Widget contentArea() {
     return SafeArea(
+      bottom: false,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 0),
         child: Column(
@@ -104,7 +105,7 @@ class _DetailsViewState extends State<DetailsView> {
                   child: Icon(
                     Icons.close,
                     color: Colors.black,
-                    size: 20,
+                    size: 25,
                   ),
                   onTap: () => Navigator.of(context).pop(),
                 ),
