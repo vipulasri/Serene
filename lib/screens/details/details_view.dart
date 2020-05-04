@@ -35,6 +35,32 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        brightness: Brightness.light,
+        backgroundColor: widget.category.color,
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        elevation: 0,
+        title: Text(
+          widget.category.title,
+          style: AppTypography.title(),
+        ),
+        actions: [
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              customBorder: CircleBorder(),
+              child: Icon(
+                Icons.close,
+                color: Colors.black,
+                size: 25,
+              ),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+          ),
+          SizedBox(width: 16)
+        ],
+      ),
         body: Container(
           decoration: BoxDecoration(color: widget.category.color),
           child: Stack(
@@ -43,7 +69,7 @@ class _DetailsViewState extends State<DetailsView> {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(top: Dimen.padding * 3),
+                    padding: EdgeInsets.only(top: 0),
                     child: Image.asset(widget.category.icon,
                         width: 200,
                         height: 200,
@@ -66,8 +92,7 @@ class _DetailsViewState extends State<DetailsView> {
         padding: EdgeInsets.symmetric(horizontal: 0),
         child: Column(
           children: [
-            appBar(),
-            SizedBox(height: Dimen.padding * 4),
+            SizedBox(height: Dimen.padding * 4.5),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -83,36 +108,6 @@ class _DetailsViewState extends State<DetailsView> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget appBar() {
-    return Container(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: Dimen.padding, horizontal: Dimen.padding),
-          child: Row(
-            children: [
-              Text(
-                widget.category.title,
-                style: AppTypography.title(),
-              ),
-              Spacer(),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  customBorder: CircleBorder(),
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 25,
-                  ),
-                  onTap: () => Navigator.of(context).pop(),
-                ),
-              ),
-            ],
-          ),
-        )
     );
   }
 

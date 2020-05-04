@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Serene',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xFF2C2C2C),
       ).copyWith(
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: <TargetPlatform, PageTransitionsBuilder>{

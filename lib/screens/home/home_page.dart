@@ -36,6 +36,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Serene",
+          style: AppTypography.appTitle().copyWith(color: Colors.white),
+        ),
+        elevation: 0,
+      ),
       body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -51,14 +59,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
-            top: Dimen.padding, left: Dimen.padding, right: Dimen.padding),
+            left: Dimen.padding, right: Dimen.padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "Serene",
-              style: AppTypography.appTitle().copyWith(color: Colors.white),
-            ),
             Spacer(),
             showPlayButton(context),
             Spacer(),
