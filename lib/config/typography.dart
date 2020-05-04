@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTypography {
-  static String fontFamily = "HaasGrotesk";
+  static String fontFamily = "Roboto";
   static Color textColor = Color(0xFF1D2632);
 
   static TextStyle appTitle() {
