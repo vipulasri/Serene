@@ -71,12 +71,14 @@ class SoundButtonState extends State<SoundButton> {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         activeTrackColor: activeColor,
-        inactiveTrackColor: activeColor.withOpacity(0.5),
-        disabledActiveTrackColor: activeColor.withOpacity(0.2),
+        inactiveTrackColor: active? activeColor.withOpacity(0.5): inactiveColor,
+        disabledActiveTrackColor: inactiveColor,
         disabledThumbColor: inactiveColor,
         trackShape: RoundedRectSliderTrackShape(),
         thumbColor: activeColor,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
+        overlayColor: activeColor.withOpacity(0.2),
+        overlayShape: RoundSliderOverlayShape(overlayRadius: 18.0),
       ),
       child: Slider(
         value: volume,

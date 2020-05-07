@@ -70,6 +70,8 @@ class PlayingSoundViewState extends State<PlayingSoundView> {
         trackShape: RoundedRectSliderTrackShape(),
         thumbColor: volumeColor,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
+        overlayColor: volumeColor.withOpacity(0.2),
+        overlayShape: RoundSliderOverlayShape(overlayRadius: 18.0),
       ),
       child: Slider(
         value: volume,
