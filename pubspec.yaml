@@ -16,6 +16,7 @@ dependencies:
   equatable: ^1.1.1
   audioplayers: ^0.15.1
   intl: ^0.16.1
+  flare_flutter: ^1.8.3
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +32,7 @@ flutter:
     - assets/images/forest/
     - assets/images/rain/
     - assets/audios/
+    - assets/animation/
   fonts:
     - family: Caveat
       fonts:

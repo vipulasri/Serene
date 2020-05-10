@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/blocs/blocs.dart';
 import 'package:serene/blocs/result_state.dart';
 import 'package:serene/blocs/sound_bloc.dart';
+import 'package:serene/config/assets.dart';
 import 'package:serene/config/constants.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/plurals.dart';
@@ -13,6 +15,7 @@ import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
 import 'package:serene/model/sound.dart';
 import 'package:serene/screens/details/category_details_page.dart';
+import 'package:serene/screens/home/play_button.dart';
 import 'package:serene/screens/home/playing_sound_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(FetchCategories());
     controller = AnimationController(
-        duration: const Duration(milliseconds: Constants.animationDuration),
+        duration: const Duration(milliseconds: Constants.animationDurationInMillis),
         vsync: this);
   }
 
@@ -38,13 +41,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          "Serene",
-          style: AppTypography.appTitle().copyWith(color: Colors.white),
+        title: Row(
+          children: [
+            Spacer(),
+            Container(
+              width: 60,
+              height: 60,
+              child: FlareActor(
+                Assets.logoAnimation,
+                alignment: Alignment.center,
+                fit: BoxFit.contain,
+                animation: "serene_logo",
+              ),
+            ),
+            Text(
+              "Serene",
+              style: AppTypography.appTitle().copyWith(color: Colors.white),
+            ),
+            Spacer()
+          ],
         ),
         elevation: 0,
       ),
-      body: Container(
+      body:
+      Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(color: Color(0xFF2C2C2C)),
@@ -93,57 +113,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
         isPlaying ? controller.forward() : controller.reverse();
 
-        return Stack(
-          alignment: AlignmentDirectional.centerStart,
-          overflow: Overflow.visible,
-          children: [
-            InkWell(
-              onTap: () {
-                _soundsPlayingModalBottomSheet(context);
-              },
-              child: AnimatedContainer(
-                curve: Curves.fastOutSlowIn,
-                duration: Duration(seconds: Constants.animationDuration),
-                height: 40,
-                transform: Matrix4.translationValues(20.0, 00.0, 0.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(100),
-                      bottomRight: Radius.circular(100),
-                    )
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(width: 15),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
-                      child: Text(isPlaying ? Plurals.playingSounds(playingItems) : "Play",
-                        style: AppTypography.body()),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: _onPlayButtonPressed,
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100)
-                ),
-                child: Center(
-                  child: AnimatedIcon(
-                    icon: AnimatedIcons.play_pause,
-                    progress: controller,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        return PlayButton(
+          isPlaying: isPlaying,
+          playingCount: playingItems,
+          onPlayAction: _onPlayButtonPressed,
+          onPlaylistAction: () {
+            _soundsPlayingModalBottomSheet(context);
+          },
         );
       },
     );
