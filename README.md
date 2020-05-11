@@ -2,11 +2,11 @@
 # Serene - Relax, Meditate and Sleep  
 A white noise app developed with [Flutter](https://flutter.dev/). It helps you meditate, sleep better, focus, relax and be calm. 
 
-**Screenshots**
-<p float="left">
-  <img src="art/screen01.png" width="200" />
-  <img src="art/screen02.png" width="200" /> 
-  <img src="art/screen03.png" width="200" />
+**Screenshots:**
+<p float="center">
+  <img src="art/screen01.png" width="250" />
+  <img src="art/screen02.png" width="250" /> 
+  <img src="art/screen03.png" width="250" />
 </p>
 
 **Features:** 
