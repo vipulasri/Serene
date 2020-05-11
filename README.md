@@ -1,10 +1,21 @@
 ![serene](art/graphic.jpg)  
 # Serene - Relax, Meditate and Sleep  
-A white noise app developed with [Flutter](https://flutter.dev/). It helps you medidate, sleep better, focus, relax and be calm. 
+A white noise app developed with [Flutter](https://flutter.dev/). It helps you meditate, sleep better, focus, relax and be calm. 
+
+**Screenshots**
+<p float="left">
+  <img src="media/screen01.png" width="200" />
+  <img src="media/screen02.png" width="200" /> 
+  <img src="media/screen03.png" width="200" />
+</p>
+
+**Features:** 
+* Play multiple sounds simultaneously
+* Adjust the sound volume individually
 
 **Libraries:**
 * [Bloc](https://bloclibrary.dev/#/): Bloc Architecture
-* [AudioPlayers](https://github.com/luanpotter/audioplayers): Supports multiple simultaenous playing
+* [AudioPlayers](https://github.com/luanpotter/audioplayers): Supports multiple simultaneous playing
 * [Material Animations](https://pub.dev/packages/animations)
 * [Flare](https://github.com/2d-inc/Flare-Flutter): Logo Animation
 
@@ -12,7 +23,7 @@ A white noise app developed with [Flutter](https://flutter.dev/). It helps you m
 
 **Credits:**
 * **Design Inspiration:** [Meditation App](https://dribbble.com/shots/10955074-Meditation-APP) by Dragon Lee
-* **Icon:** free personal usage from [Flaticon](https://www.flaticon.com/) 
+* **Icon:** free personal usage from [FlatIcon](https://www.flaticon.com/) 
 * **Images and Audios:** all from internet resources
 
 ## License
