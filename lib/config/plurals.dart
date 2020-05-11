@@ -2,25 +2,19 @@ import 'package:intl/intl.dart';
 
 class Plurals {
 
-  static playingSounds(int howMany) => Intl.plural(
+  static selectedSounds(int howMany) => Intl.plural(
     howMany,
-    one: 'Playing $howMany sound',
-    other: 'Playing $howMany sounds',
-    name: "playingSound",
+    zero: 'No sounds selected',
+    one: '$howMany sound selected',
+    other: '$howMany sounds selected',
+    name: "selectedSound",
     args: [howMany],
     examples: const {'howMany': 1},
-    desc: "Playing 1 sound",
+    desc: "1 sound selected",
   );
 
-  static currentlyPlayingSounds(int howMany) => Intl.plural(
-    howMany,
-    zero: 'No sounds are playing',
-    one: 'Currently Playing ($howMany sound)',
-    other: 'Currently Playing ($howMany sounds)',
-    name: "currentlyPlayingSound",
-    args: [howMany],
-    examples: const {'howMany': 1},
-    desc: "Currently Playing (1 sound)",
-  );
+  static String currentlyPlayingSelectedSounds(bool isPlaying, int howMany) {
+    return '${isPlaying? 'Currently Playing': 'Currently Paused'} (${selectedSounds(howMany)})';
+  }
 
 }

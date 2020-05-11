@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:serene/config/assets.dart';
+import 'package:serene/config/constants.dart';
 import 'package:serene/config/helper.dart';
 import 'package:serene/manager/audio_manager.dart';
 import 'package:serene/model/category.dart';
@@ -9,6 +10,8 @@ class DataRepository {
   // in-memory categories
   List<Category> categories = <Category>[];
   List<Sound> sounds = <Sound>[];
+  String randomPlayingId = "";
+  bool isPlaying = false;
 
   Future<String> _loadCategoriesAsset() async {
     return await rootBundle.loadString(Assets.soundsJson);
@@ -41,39 +44,38 @@ class DataRepository {
         .toList(); //sound id = 201, 2 is category id
   }
 
-  Future<List<Sound>> getPlayingSounds() async {
+  Future<List<Sound>> getSelectedSounds() async {
     return sounds.where((sound) => sound.active).toList();
   }
 
-  Future<List<Sound>> playAllPreviouslyPlayingSounds() async {
-    List<String> playingIds = await AudioManager.instance.playAll();
+  Future<List<Sound>> playAllSelectedSounds() async {
+    List<Sound> selected = await getSelectedSounds();
 
-    if(playingIds.isEmpty) {
-      return _playRandom(); // play a random sound
+    selected.forEach((element) {
+      AudioManager.instance.play(element);
+    });
+
+    // check if there were any selected sounds then player state is changed
+    if(selected.isNotEmpty) {
+      isPlaying = true;
     }
-
-    sounds = sounds.map((element) {
-      element.active = playingIds.contains(element.id);
-      return element;
-    }).toList();
-
-    return getPlayingSounds();
+    
+    return selected;
   }
 
   Future<List<Sound>> stopAllPlayingSounds() async {
-    sounds = sounds.map((element) {
-      element.active = false;
-      return element;
-    }).toList();
+    List<Sound> playing = await getSelectedSounds();
 
-    await AudioManager.instance.stopAll();
-    return []; // return empty list, as none sound is playing
-  }
+    playing.forEach((element) {
+      AudioManager.instance.stop(element);
+    });
 
-  Future<List<Sound>> _playRandom() async {
-    Sound randomSound = sounds[Helper.getRandomNumber(0, sounds.length)];
-    updateSound(randomSound.id, true, 5);
-    return getPlayingSounds();
+    // check if there were any selected sounds then player state is changed
+    if(playing.isNotEmpty) {
+      isPlaying = false;
+    }
+    
+    return playing;
   }
 
   Future<bool> updateSound(String soundId, bool active, double volume) async {
@@ -85,9 +87,12 @@ class DataRepository {
       sounds[soundIndex] = sound;
 
       if (active) {
-        AudioManager.instance.play(sound);
+        playAllSelectedSounds();
       } else {
         AudioManager.instance.stop(sound);
+        if((await getSelectedSounds()).isEmpty) {
+          isPlaying = false;
+        }
       }
 
       return true;
@@ -95,4 +100,22 @@ class DataRepository {
 
     return false;
   }
+
+  Future<List<Sound>> playRandom() async {
+    Sound randomSound = sounds[Helper.getRandomNumber(0, sounds.length)];
+    updateSound(randomSound.id, true, Constants.defaultSoundVolume);
+    randomPlayingId = randomSound.id;
+    return getSelectedSounds();
+  }
+
+  Future<bool> stopRandom() async {
+    updateSound(randomPlayingId, false, Constants.defaultSoundVolume);
+    randomPlayingId = "";
+    return true;
+  }
+
+  bool isPlayingRandom() {
+    return randomPlayingId.isNotEmpty;
+  }
+
 }

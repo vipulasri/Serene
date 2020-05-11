@@ -9,12 +9,14 @@ import 'package:serene/config/typography.dart';
 class PlayButton extends StatefulWidget {
 
   final bool isPlaying;
+  final bool isPlayingRandom;
   final int playingCount;
   final VoidCallback onPlayAction;
   final VoidCallback onPlaylistAction;
 
   PlayButton({Key key,
     @required this.isPlaying,
+    @required this.isPlayingRandom,
     @required this.playingCount,
     @required this.onPlayAction,
     @required this.onPlaylistAction,
@@ -26,7 +28,9 @@ class PlayButton extends StatefulWidget {
 
 class _PlayButtonState extends State<PlayButton> with TickerProviderStateMixin {
 
+  final TextStyle messageStyle = AppTypography.body2();
   AnimationController _controller;
+
 
   @override
   void initState() {
@@ -48,7 +52,7 @@ class _PlayButtonState extends State<PlayButton> with TickerProviderStateMixin {
     widget.isPlaying ? _controller.forward() : _controller.reverse();
 
     return AnimatedContainer(
-      width: widget.isPlaying? 300 : 100,
+      width: hasPlayingList() ? 300 : 165,
       duration: Duration(seconds: 1),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -78,13 +82,10 @@ class _PlayButtonState extends State<PlayButton> with TickerProviderStateMixin {
             ),
             SizedBox(width: Dimen.padding/2),
             Expanded(
-              child: Center(
-                child: Text(widget.isPlaying ? Plurals.playingSounds(widget.playingCount) : "Play",
-                    style: AppTypography.body()),
-              ),
+              child: _displayMessage(),
             ),
             SizedBox(width: Dimen.padding/2),
-            widget.isPlaying? InkWell(
+            hasPlayingList()? InkWell(
               onTap: () => widget.onPlaylistAction(),
               child: Container(
                 width: 35,
@@ -104,6 +105,27 @@ class _PlayButtonState extends State<PlayButton> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  Widget _displayMessage() {
+    if(widget.isPlaying && widget.isPlayingRandom) {
+      return Text("Playing random sound", style: messageStyle);
+    } else if(hasPlayingList()) {
+      String title = widget.isPlaying? "Now Playing" : "Now Paused";
+      return Column(
+        children: [
+          Text(title, style: messageStyle),
+          Text(Plurals.selectedSounds(widget.playingCount),
+              style: AppTypography.body().copyWith(fontSize:14, color: Colors.grey)),
+        ],
+      );
+    } else {
+      return Text("Play random", style: messageStyle);
+    }
+  }
+
+  bool hasPlayingList() {
+    return widget.playingCount>0;
   }
 
 }

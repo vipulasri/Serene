@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:serene/blocs/sound_bloc.dart';
+import 'package:serene/blocs/playing_bloc.dart';
 import 'package:serene/config/constants.dart';
 import 'package:serene/model/sound.dart';
 
@@ -47,7 +47,7 @@ class PlayingSoundViewState extends State<PlayingSoundView> {
         InkWell(
           child: Icon(Icons.close, color: Color(0xFF1D2632).withOpacity(0.8)),
           onTap: () {
-            BlocProvider.of<SoundBloc>(context).add(StopSound(soundId: widget.sound.id));
+            BlocProvider.of<PlayingSoundsBloc>(context).add(StopSound(soundId: widget.sound.id));
           },
         )
       ],
@@ -59,8 +59,8 @@ class PlayingSoundViewState extends State<PlayingSoundView> {
       setState(() {
         this.volume = volume;
       });
-      BlocProvider.of<SoundBloc>(context)
-          .add(UpdateSound(soundId: widget.sound.id, active: true, volume: volume));
+      BlocProvider.of<PlayingSoundsBloc>(context)
+          .add(UpdateSoundVolume(soundId: widget.sound.id, volume: volume));
     }
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(

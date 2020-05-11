@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:serene/blocs/blocs.dart';
+import 'package:serene/blocs/playing_bloc.dart';
 import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/data/repository.dart';
 import 'package:serene/screens/home/home_page.dart';
@@ -48,9 +49,14 @@ class MyApp extends StatelessWidget {
                     RepositoryProvider.of<DataRepository>(context)),
           ),
           BlocProvider(
-            create: (context) => SoundBloc(
+            create: (context) => PlayingSoundsBloc(
                 repository:
                     RepositoryProvider.of<DataRepository>(context)),
+          ),
+          BlocProvider(
+            create: (context) => SoundBloc(
+                repository:
+                RepositoryProvider.of<DataRepository>(context)),
           ),
         ],
         child: HomePage(),

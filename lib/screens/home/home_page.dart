@@ -5,15 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:serene/blocs/blocs.dart';
+import 'package:serene/blocs/playing_bloc.dart';
 import 'package:serene/blocs/result_state.dart';
-import 'package:serene/blocs/sound_bloc.dart';
 import 'package:serene/config/assets.dart';
-import 'package:serene/config/constants.dart';
 import 'package:serene/config/dimen.dart';
 import 'package:serene/config/plurals.dart';
 import 'package:serene/config/typography.dart';
 import 'package:serene/model/category.dart';
-import 'package:serene/model/sound.dart';
+import 'package:serene/model/playing_sounds.dart';
 import 'package:serene/screens/details/category_details_page.dart';
 import 'package:serene/screens/home/play_button.dart';
 import 'package:serene/screens/home/playing_sound_view.dart';
@@ -24,16 +23,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  bool isPlaying = false;
-  AnimationController controller;
 
   @override
   void initState() {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(FetchCategories());
-    controller = AnimationController(
-        duration: const Duration(milliseconds: Constants.animationDurationInMillis),
-        vsync: this);
   }
 
   @override
@@ -75,7 +69,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget contentArea() {
-    BlocProvider.of<SoundBloc>(context).add(FetchPlayingSounds());
+    BlocProvider.of<PlayingSoundsBloc>(context).add(FetchPlayingSounds());
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
@@ -94,7 +88,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget showPlayButton(BuildContext context) {
-    return BlocBuilder<SoundBloc, Result>(
+    return BlocBuilder<PlayingSoundsBloc, Result>(
       condition: (previousState, state) {
         if (previousState is Success && state is Success) {
           return previousState.value != state.value;
@@ -102,25 +96,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         return previousState != state;
       },
       builder: (context, state) {
-        int playingItems = 0;
         if (state is Success) {
-          isPlaying = true;
-          playingItems = (state.value as List<Sound>).length;
+          PlayingData data = (state.value as PlayingData);
+          return PlayButton(
+            isPlaying: data.isPlaying,
+            isPlayingRandom: data.isRandom,
+            playingCount: data.playing.length,
+            onPlayAction: _onPlayButtonPressed,
+            onPlaylistAction: () {
+              _showSelectedSoundsModalBottomSheet(context);
+            },
+          );
         } else {
-          isPlaying = false;
-          playingItems = 0;
+          return Column(
+            children: [
+              PlayButton(
+                isPlaying: false,
+                isPlayingRandom: false,
+                playingCount: 0,
+                onPlayAction: null,
+                onPlaylistAction: null,
+              ),
+              SizedBox(height: 5),
+              Text("Something went wrong")
+            ],
+          );
         }
-
-        isPlaying ? controller.forward() : controller.reverse();
-
-        return PlayButton(
-          isPlaying: isPlaying,
-          playingCount: playingItems,
-          onPlayAction: _onPlayButtonPressed,
-          onPlaylistAction: () {
-            _soundsPlayingModalBottomSheet(context);
-          },
-        );
       },
     );
   }
@@ -207,17 +208,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   _onPlayButtonPressed() async {
-    BlocProvider.of<SoundBloc>(context).add(TogglePlayButton());
+    BlocProvider.of<PlayingSoundsBloc>(context).add(TogglePlayButton());
   }
 
-  void _soundsPlayingModalBottomSheet(BuildContext buildContext) {
+  void _showSelectedSoundsModalBottomSheet(BuildContext buildContext) {
     showModalBottomSheet(
         context: buildContext,
         shape: RoundedRectangleBorder(
@@ -229,32 +224,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         backgroundColor: Colors.white,
         builder: (BuildContext _) {
           return BlocProvider.value(
-            value: BlocProvider.of<SoundBloc>(buildContext),
-            child: _showPlayingsSoundsList()
+            value: BlocProvider.of<PlayingSoundsBloc>(buildContext),
+            child: _playingsSoundsList()
           );
         }
     );
   }
 
-  Widget _showPlayingsSoundsList() {
-    return BlocBuilder<SoundBloc, Result>(
+  Widget _playingsSoundsList() {
+    return BlocBuilder<PlayingSoundsBloc, Result>(
       builder: (context, state) {
         if(state is Success) {
 
-          List<Sound> sounds = (state.value as List<Sound>);
+          PlayingData data = (state.value as PlayingData);
 
           List<Widget> widgets = [];
           widgets.add(
             Padding(
-              padding: EdgeInsets.all(Dimen.padding),
+              padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
               child: Center(
-                child: Text("${Plurals.currentlyPlayingSounds(sounds.length)}",
-                    style: AppTypography.body()),
-              ),
+                child: data.playing.isNotEmpty? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("${data.isPlaying? 'Currently Playing': 'Currently Paused'}", style: AppTypography.body2()),
+                    Text("${Plurals.selectedSounds(data.playing.length)}", style: AppTypography.body().copyWith(fontSize: 14, color: Colors.grey)),
+                  ],
+                ): Text("${Plurals.selectedSounds(0)}", style: AppTypography.body()),
+              )
             )
           );
           widgets.addAll(
-              sounds.map((sound) =>
+              data.playing.map((sound) =>
                   PlayingSoundView(sound: sound)
               ).toList()
           );
@@ -274,13 +275,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           );
         }
+
         return Wrap(
           children: [
             Center(
               child: Padding(
                 padding: EdgeInsets.all(Dimen.padding),
-                child: Text("${Plurals.currentlyPlayingSounds(0)}",
-                    style: AppTypography.body()),
+                child: Text("${Plurals.selectedSounds(0)}", style: AppTypography.body()),
               ),
             )
           ],
