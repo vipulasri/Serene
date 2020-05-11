@@ -4,9 +4,9 @@ A white noise app developed with [Flutter](https://flutter.dev/). It helps you m
 
 **Screenshots**
 <p float="left">
-  <img src="media/screen01.png" width="200" />
-  <img src="media/screen02.png" width="200" /> 
-  <img src="media/screen03.png" width="200" />
+  <img src="art/screen01.png" width="200" />
+  <img src="art/screen02.png" width="200" /> 
+  <img src="art/screen03.png" width="200" />
 </p>
 
 **Features:** 
